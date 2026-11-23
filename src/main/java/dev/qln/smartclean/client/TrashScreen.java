@@ -14,9 +14,9 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
-    private static final ResourceLocation TEXTURE =
-            new ResourceLocation("minecraft", "textures/gui/container/generic_54.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("smartclean", "textures/gui/trash_panel.png");
 
+    private static final ResourceLocation BUTTONS = new ResourceLocation("smartclean", "textures/gui/page_buttons.png");
     private static final int BTN_W = 14;
     private static final int BTN_H = 32;
     private static final int BTN_GAP = 8;
@@ -42,8 +42,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, 125);
-        graphics.blit(TEXTURE, x, y + 125, 0, 126, this.imageWidth, 96);
+        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
         int buttonY = this.topPos + (this.imageHeight - BTN_H) / 2;
         boolean canPrev = this.menu.getPage() > 0;
@@ -61,19 +60,9 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     private void drawPageButton(GuiGraphics graphics, int x, int y, boolean enabled, boolean hovered, boolean left) {
-        int border = enabled ? 0xFF1E1E1E : 0xFF2B2B2B;
-        int body = enabled ? (hovered ? 0xFF6E6E6E : 0xFF4A4A4A) : 0xFF2F2F2F;
-        graphics.fill(x, y, x + BTN_W, y + BTN_H, border);
-        graphics.fill(x + 1, y + 1, x + BTN_W - 1, y + BTN_H - 1, body);
-
-        int cx = x + BTN_W / 2 + (left ? 1 : -1);
-        int cy = y + BTN_H / 2;
-        int arrowColor = enabled ? (hovered ? 0xFFFFFFFF : 0xFFE2E2E2) : 0xFF808080;
-        for (int i = 0; i < 5; i++) {
-            int half = 4 - i;
-            int px = left ? cx - i : cx + i;
-            graphics.fill(px, cy - half, px + 1, cy + half + 1, arrowColor);
-        }
+        int u = left ? 0 : 14;
+        int v = !enabled ? 64 : (hovered ? 32 : 0);
+        graphics.blit(BUTTONS, x, y, u, v, BTN_W, BTN_H);
     }
 
     private void renderSlotTimers(GuiGraphics graphics) {
