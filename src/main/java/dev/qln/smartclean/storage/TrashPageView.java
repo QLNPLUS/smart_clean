@@ -13,10 +13,21 @@ public class TrashPageView implements Container {
 
     private final TrashStore store;
     private int page;
+    /**
+     * 是否允许真正改动底层存储。单人游戏里客户端与服务端共享同一个 TrashStore 实例，
+     * 客户端的点击预测若直接改动它，服务端再处理同一个点击时就取不到物品，
+     * 表现为"点一下就消失"。因此客户端视图只读，一律由服务端权威修改。
+     */
+    private final boolean canMutateStore;
 
     public TrashPageView(TrashStore store, int page) {
+        this(store, page, true);
+    }
+
+    public TrashPageView(TrashStore store, int page, boolean canMutateStore) {
         this.store = store;
         this.page = Math.max(0, page);
+        this.canMutateStore = canMutateStore;
     }
 
     public int getPage() {
@@ -50,6 +61,11 @@ public class TrashPageView implements Container {
 
     @Override
     public ItemStack removeItem(int slot, int amount) {
+        if (!canMutateStore) {
+            ItemStack cur = store.getItem(page, slot);
+            if (cur.isEmpty() || amount <= 0) return ItemStack.EMPTY;
+            return cur.copyWithCount(Math.min(amount, cur.getCount()));
+        }
         return store.removeItem(page, slot, amount);
     }
 
@@ -57,18 +73,21 @@ public class TrashPageView implements Container {
     public ItemStack removeItemNoUpdate(int slot) {
         ItemStack current = store.getItem(page, slot);
         if (current.isEmpty()) return ItemStack.EMPTY;
+        if (!canMutateStore) return current.copy();
         store.setItem(page, slot, ItemStack.EMPTY, 0L);
         return current;
     }
 
     @Override
     public void setItem(int slot, ItemStack stack) {
+        if (!canMutateStore) return;
         long expiry = store.getExpiry(page, slot);
         store.setItem(page, slot, stack, expiry);
     }
 
     @Override
     public void setChanged() {
+        if (!canMutateStore) return;
         store.markChanged();
     }
 
@@ -84,6 +103,7 @@ public class TrashPageView implements Container {
 
     @Override
     public void clearContent() {
+        if (!canMutateStore) return;
         store.clearPage(page);
     }
 }

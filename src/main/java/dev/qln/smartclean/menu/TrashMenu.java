@@ -30,7 +30,8 @@ public class TrashMenu extends AbstractContainerMenu {
     public TrashMenu(int windowId, Inventory playerInventory) {
         super(SCMenus.TRASH.get(), windowId);
         this.playerInventory = playerInventory;
-        this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0);
+        boolean clientView = playerInventory.player.level().isClientSide();
+        this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0, !clientView);
 
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 9; col++) {
