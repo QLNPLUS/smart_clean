@@ -22,4 +22,5 @@ public class TrashSlot extends Slot {
     public boolean mayPickup(Player player) {
         return true;
     }
+
 }
