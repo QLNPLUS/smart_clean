@@ -18,6 +18,7 @@ public final class SCConfig {
     public static final ForgeConfigSpec.IntValue TICKS_KEEP_AFTER_COLLECT;
     public static final ForgeConfigSpec.BooleanValue ANNOUNCE_MESSAGES;
     public static final ForgeConfigSpec.IntValue MAX_PAGES;
+    public static final ForgeConfigSpec.BooleanValue PLAYER_INSERT;
 
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEM_BLACKLIST;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> SWEEP_LIFETIMES;
@@ -61,6 +62,8 @@ public final class SCConfig {
         b.push("trash");
         MAX_PAGES = b.comment("回收站最多保留多少页（每页 54 格）。界面通过左右按钮翻页。")
                 .defineInRange("maxPages", 8, 1, 64);
+        PLAYER_INSERT = b.comment("是否允许玩家把物品主动放进回收站槽位。默认 false：回收站只能取出，槽位不接受放入。")
+                .define("playerInsert", false);
         b.pop();
 
         b.push("blacklist");
@@ -136,7 +139,9 @@ public final class SCConfig {
     private SCConfig() {}
 
     public static void register() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
+        // 用 COMMON 而不是 SERVER：配置文件落在 config/ 目录（文件名 smartclean-common.toml），玩家可直接编辑，
+        // 不再需要进存档的 serverconfig 目录才能改。
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SERVER_SPEC);
     }
 
     public static void onLoad(ModConfigEvent.Loading event) {

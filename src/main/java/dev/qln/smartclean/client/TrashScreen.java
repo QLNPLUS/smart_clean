@@ -83,8 +83,6 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
         drawPageButton(graphics, leftX, buttonY, canPrev, this.hoverLeft, true);
         drawPageButton(graphics, rightX, buttonY, canNext, this.hoverRight, false);
-
-        renderSlotTimers(graphics);
     }
 
     private void drawPageButton(GuiGraphics graphics, int x, int y, boolean enabled, boolean hovered, boolean left) {
@@ -93,16 +91,17 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         graphics.blit(BUTTONS, x, y, u, v, BTN_W, BTN_H, BTN_TEX_W, BTN_TEX_H);
     }
 
+    /** 槽位倒计时画在物品之上（renderLabels 在物品之后执行），白色带阴影保证压在图标上仍然清晰。 */
     private void renderSlotTimers(GuiGraphics graphics) {
         for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
             int seconds = this.menu.getRemainingSeconds(slot);
             if (seconds < 0) continue;
             int col = slot % 9;
             int row = slot / 9;
-            int x = this.leftPos + SIDEBAR + 8 + col * 18 + 1;
-            int y = this.topPos + 18 + row * 18 + 1;
+            int x = SIDEBAR + 8 + col * 18 + 1;
+            int y = 18 + row * 18 + 1;
             String text = formatSeconds(seconds);
-            graphics.drawString(this.font, text, x, y, 0xFFFFD166, true);
+            graphics.drawString(this.font, text, x, y, 0xFFFFFFFF, true);
         }
     }
 
@@ -125,6 +124,8 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         String items = "物品 " + this.menu.getTotalItems();
         int itemsWidth = this.font.width(items);
         graphics.drawString(this.font, items, right - itemsWidth, this.inventoryLabelY, 0x606060, false);
+
+        renderSlotTimers(graphics);
     }
 
     @Override

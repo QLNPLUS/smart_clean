@@ -6,6 +6,7 @@ import dev.qln.smartclean.storage.TrashStore;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -94,6 +95,36 @@ public class TrashMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return true;
+    }
+
+    /**
+     * 点击回收站槽位直接把物品收进玩家背包，不再走"先放到光标再拖"的流程。
+     * 之前点击只把物品挪到光标上，这一格立刻显示为空，观感就像物品凭空丢了。
+     * 背包放不下时把剩余部分放回原槽位，保证任何情况下都不会消失。
+     */
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        if (!player.level().isClientSide
+                && clickType == ClickType.PICKUP
+                && slotId >= 0 && slotId < TRASH_SLOTS) {
+            Slot slot = this.slots.get(slotId);
+            ItemStack current = slot.getItem();
+            if (!current.isEmpty()) {
+                int amount = button == 1 ? 1 : current.getCount();
+                ItemStack taken = slot.remove(amount);
+                if (!taken.isEmpty()) {
+                    boolean added = player.getInventory().add(taken);
+                    if (!added && !taken.isEmpty()) {
+                        // 背包放不下：原样退回槽位，并给它一个"永不过期"的保留时间，避免被 tick 当成过期物品清掉
+                        this.view.getStore().setItem(this.page, slotId, taken, TrashStore.NEVER);
+                    }
+                    slot.setChanged();
+                    this.broadcastChanges();
+                    return;
+                }
+            }
+        }
+        super.clicked(slotId, button, clickType, player);
     }
 
     @Override
