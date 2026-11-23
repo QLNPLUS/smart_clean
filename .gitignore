@@ -11,6 +11,7 @@ versions/
 curseforge/game-versions.json
 curseforge/upload-attempt-*.json
 curseforge/upload-response-*.txt
+docs/mcmod/console-module.js
 
 # Gradle / 构建产物
 .gradle/
