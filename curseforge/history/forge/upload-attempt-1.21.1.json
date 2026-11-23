@@ -1,0 +1,17 @@
+{
+  "startedUtc": "2026-11-23T09:47:05.123749+00:00",
+  "sha256": "5d3ec0c579be289a7ccdd75e312592cb2d333235da2147fb483f2e63a54301ee",
+  "metadata": {
+    "changelog": "SmartClean 1.0.0 — first public release.\n\n- Paged trash GUI: page arrows on both sides of the container screen, 54 usable slots per page, Esc closes as usual.\n- Per-item sweep countdown: any item ID can have its own lifetime in the world, ahead of the global cycle.\n- Per-item retention countdown: any item ID can have its own time inside the trash bin, shown per slot.\n- Trash compression: `source_id,source_amount,target_id,target_amount` (8 oak logs → 6 oak planks).\n- Scheduled sweeping with warnings, blacklist, void protection, gradient messages and config hot reload.\n- Builds for Forge 1.20.1, NeoForge 1.21.1 and NeoForge 26.1.2. Client mod required.\n\n---\nSmartClean 1.0.0 首个公开版本。\n\n- 分页回收站：翻页箭头画在容器界面两侧，每页 54 格全部可用，Esc 照常关闭。\n- 按物品 ID 的世界侧倒计时：任意物品都可以有自己在世界上的存在时间，优先于全局周期被回收。\n- 按物品 ID 的回收站保留倒计时：任意物品在回收站内按自己的时间清空，槽位显示剩余秒数。\n- 物品压缩：`源ID,源数量,目标ID,目标数量`，例如 8 个原木换成 6 个木板。\n- 定时清理与预警、黑名单、虚空保护、渐变消息、配置热重载。\n- 提供 Forge 1.20.1、NeoForge 1.21.1、NeoForge 26.1.2 三个构建；客户端需安装本模组。\n",
+    "changelogType": "markdown",
+    "displayName": "smartclean-1.21.1-neoforge-1.0.0",
+    "releaseType": "release",
+    "gameVersions": [
+      11779,
+      10150,
+      11135,
+      9638,
+      9639
+    ]
+  }
+}
