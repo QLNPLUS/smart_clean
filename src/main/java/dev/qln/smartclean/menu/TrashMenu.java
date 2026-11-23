@@ -86,6 +86,9 @@ public class TrashMenu extends AbstractContainerMenu {
         this.page = page;
         this.pageCount = Math.max(1, pageCount);
         this.totalItems = totalItems;
+        // 客户端必须让槽位视图跟着页码切换：否则界面一直渲染第 1 页内容，
+        // 翻页看起来无效，点击时服务端却在另一页上取物，物品会"凭空消失"。
+        this.view.setPage(this.page);
         if (remaining != null && remaining.length == TRASH_SLOTS) {
             this.remaining = remaining.clone();
         }
