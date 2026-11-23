@@ -46,6 +46,16 @@
 - 渐变消息前缀、占位符模板、配置热重载
 - 命令：`/smartclean help|gui|status|collect|purge|reload`
 
+## 材质
+
+界面不依赖原版箱子贴图，使用自绘资源：
+
+- `assets/smartclean/textures/gui/trash_panel.png`（176×222 面板，含 54 + 27 + 9 个槽位凹槽）
+- `assets/smartclean/textures/gui/page_buttons.png`（28×96，左右 × 普通/悬停/禁用 三态）
+- `icon.png`（模组列表图标，`mods.toml` / `neoforge.mods.toml` 的 `logoFile`）
+
+三张图由 [tools/gen_textures.py](tools/gen_textures.py) 程序化生成（Pillow 逐像素绘制，非 AI 生图），改脚本后运行 `python tools/gen_textures.py <输出目录>` 即可重新出图，再把产物拷进各版本的 `src/main/resources`。
+
 ## 客户端要求
 
 本模组的翻页按钮与独立倒计时显示由客户端渲染，**客户端需要安装同一模组**。仅装服务端时服务端逻辑仍然生效，但玩家无法打开分页界面。
