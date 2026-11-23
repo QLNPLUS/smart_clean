@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
  */
 public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
-    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("smartclean", "textures/gui/trash_panel.png");
+    private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
 
     private static final Identifier BUTTONS = Identifier.fromNamespaceAndPath("smartclean", "textures/gui/page_buttons.png");
     private static final int BTN_W = 14;
@@ -35,7 +35,8 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 176, 222);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0.0F, 0.0F, this.imageWidth, 125, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + 125, 0.0F, 126.0F, this.imageWidth, 96, 256, 256);
 
         int buttonY = this.topPos + (this.imageHeight - BTN_H) / 2;
         boolean canPrev = this.menu.getPage() > 0;
