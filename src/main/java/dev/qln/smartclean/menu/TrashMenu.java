@@ -6,6 +6,7 @@ import dev.qln.smartclean.storage.TrashStore;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -86,6 +87,9 @@ public class TrashMenu extends AbstractContainerMenu {
         this.page = page;
         this.pageCount = Math.max(1, pageCount);
         this.totalItems = totalItems;
+        // 客户端必须让槽位视图跟着页码切换：否则界面一直渲染第 1 页内容，
+        // 翻页看起来无效，点击时服务端却在另一页上取物，物品会"凭空消失"。
+        this.view.setPage(this.page);
         if (remaining != null && remaining.length == TRASH_SLOTS) {
             this.remaining = remaining.clone();
         }
@@ -94,6 +98,17 @@ public class TrashMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return true;
+    }
+
+    /** 诊断用：记录原版点击流程前后 carried 与目标槽位内容。 */
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        ItemStack before = this.getCarried().copy();
+        ItemStack inSlot = (slotId >= 0 && slotId < this.slots.size()) ? this.slots.get(slotId).getItem().copy() : ItemStack.EMPTY;
+        super.clicked(slotId, button, clickType, player);
+        SmartClean.LOGGER.info("[SC-DEBUG] clicked slot={} button={} type={} client={} slotBefore={}x{} carried {} -> {}",
+                slotId, button, clickType, player.level().isClientSide,
+                inSlot.getCount(), inSlot.getItem(), before.getCount(), this.getCarried().getCount());
     }
 
     @Override
