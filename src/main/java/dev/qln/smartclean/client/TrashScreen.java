@@ -12,8 +12,9 @@ import net.minecraft.world.entity.player.Inventory;
  * 分页回收站界面：左右两侧绘制翻页按钮（不占用任何容器槽位），Esc 直接关闭。
  * 每个槽位左上角显示该物品独立的剩余清理时间。
  *
- * <p>GUI 在箱子贴图左右各加一条 {@link #SIDEBAR} 宽的延伸带，翻页按钮放在延伸带里。
- * 按钮位于 GUI 自身范围内，JEI 等右侧面板会按加宽后的界面自动避开，不会再遮挡或抢走点击。
+ * <p>GUI 在箱子贴图左右各留出 {@link #SIDEBAR} 宽的<b>透明占位带</b>（不绘制任何像素），
+ * 只是把界面范围加宽，让 JEI 等右侧面板按加宽后的界面自动避开，不再遮挡或抢走点击；
+ * 翻页按钮贴在这两条空白带紧靠箱子贴图的内侧边缘，看起来就挂在界面边上。
  */
 public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
@@ -26,7 +27,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     private static final int BTN_TEX_W = 28;
     private static final int BTN_TEX_H = 96;
 
-    /** 箱子贴图两侧各留出的延伸带宽度（容纳翻页按钮）。 */
+    /** 箱子贴图两侧各留出的透明占位带宽度（不放任何像素，只用来加宽界面范围并容纳翻页按钮）。 */
     private static final int SIDEBAR = 22;
     private static final int VANILLA_W = 176;
     private static final int VANILLA_H = 222;
@@ -55,11 +56,11 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     private int buttonLeftX() {
-        return this.leftPos + (SIDEBAR - BTN_W) / 2;
+        return this.leftPos + SIDEBAR - BTN_W;
     }
 
     private int buttonRightX() {
-        return this.leftPos + this.imageWidth - SIDEBAR + (SIDEBAR - BTN_W) / 2;
+        return this.leftPos + SIDEBAR + VANILLA_W;
     }
 
     @Override
@@ -67,7 +68,6 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         int x = this.leftPos;
         int y = this.topPos;
 
-        drawSidebars(graphics, x, y);
 
         graphics.blit(TEXTURE, x + SIDEBAR, y, 0, 0, VANILLA_W, 125);
         graphics.blit(TEXTURE, x + SIDEBAR, y + 125, 0, 126, VANILLA_W, VANILLA_H - 125);
@@ -85,20 +85,6 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         drawPageButton(graphics, rightX, buttonY, canNext, this.hoverRight, false);
 
         renderSlotTimers(graphics);
-    }
-
-    /** 用原版箱子界面的色调把两侧延伸带填成同色，并描一圈边线，让按钮看起来属于界面本身。 */
-    private void drawSidebars(GuiGraphics graphics, int x, int y) {
-        int side = 0xFFC6C6C6;
-        int line = 0xFF555555;
-        int rightX = x + this.imageWidth - SIDEBAR;
-        graphics.fill(x, y, x + SIDEBAR, y + this.imageHeight, side);
-        graphics.fill(rightX, y, x + this.imageWidth, y + this.imageHeight, side);
-        // 外框与内侧分隔线
-        graphics.fill(x, y, x + 1, y + this.imageHeight, line);
-        graphics.fill(x + this.imageWidth - 1, y, x + this.imageWidth, y + this.imageHeight, line);
-        graphics.fill(x + SIDEBAR - 1, y, x + SIDEBAR, y + this.imageHeight, line);
-        graphics.fill(rightX, y, rightX + 1, y + this.imageHeight, line);
     }
 
     private void drawPageButton(GuiGraphics graphics, int x, int y, boolean enabled, boolean hovered, boolean left) {
