@@ -46,6 +46,10 @@
 - 渐变消息前缀、占位符模板、配置热重载
 - 命令：`/smartclean help|gui|status|collect|purge|reload`
 
+## 发布物料
+
+- [docs/CURSEFORGE_DESCRIPTION.md](docs/CURSEFORGE_DESCRIPTION.md)：CurseForge 项目描述（英文块 + `---` + 中文块，整段可粘贴到 CF 描述框）
+
 ## 材质
 
 界面背景直接使用原版箱子贴图 `minecraft:textures/gui/container/generic_54.png`，和其它容器界面风格一致，不需要自绘面板。原版没有的资源只有两样，由 [tools/gen_textures.py](tools/gen_textures.py) 程序化生成（Pillow 逐像素绘制，非 AI 生图，配色取原版 GUI 调色板 #C6C6C6 面 / 黑边 / 白高光 / #555555 阴影）：
