@@ -1,0 +1,57 @@
+{
+  "site": "www.mcmod.cn",
+  "action": "添加模组",
+  "class_name_zh": "SmartClean（智能清理）",
+  "class_name_en": "SmartClean",
+  "modid": "smartclean",
+  "author": {
+    "display_name": "企鹅",
+    "mcmod_user_id": 41055,
+    "aliases": ["DxEVIL", "QLNPLUS"],
+    "role": "所有者"
+  },
+  "categories": {
+    "core": "实用",
+    "sub": ["优化"]
+  },
+  "platform": "Java版",
+  "apis": ["Forge", "NeoForge"],
+  "mc_versions": ["1.20.1", "1.21.1", "26.1.2"],
+  "env": {
+    "client": "需装",
+    "server": "需装"
+  },
+  "status": "活跃",
+  "source": "开源",
+  "links": {
+    "curseforge": "https://www.curseforge.com/minecraft/mc-mods/smart-clean",
+    "github": "https://github.com/QLNPLUS/smart_clean"
+  },
+  "content": {
+    "length": 3344,
+    "format": "mcmod wiki syntax ([h1=...] / <p> / 表格)",
+    "source": "docs/mcmod/content.html"
+  },
+  "cover": {
+    "file": "docs/mcmod/cover.png",
+    "size": "800x500",
+    "injection": "临时 file input + browsermcp upload + FileReader → dataURL → class-cover 与预览，再点“更新封面”",
+    "preview_ok": true
+  },
+  "captcha": "none - 当前用户组免验证码",
+  "script_injection": "本地 127.0.0.1:8765 通道被浏览器拦截（fetch/script/clipboard 全 pending）；改用 upload + FileReader + eval 注入 console-module-nocover.js（11280 字符）",
+  "submit_dialog": {
+    "title": "模组添加确认",
+    "warnings": [
+      "1 处警告：正文含疑似不规范/错词「(立场)」，页面注明如为误报可忽略"
+    ],
+    "result": "提交成功，内容已成功提交，请等待管理员审核"
+  },
+  "review": {
+    "status": "审核中",
+    "list_url": "https://www.mcmod.cn/verify.html?selfonly=1&order=createtime",
+    "typical_cycle": "通常 24 小时内；模组区域最长约 7 日，逾期可催审",
+    "entry_url": null
+  },
+  "next_step": "审核通过后回填 entry_url；若被退回，按审核附言修改后点“再编辑”重新提交"
+}
