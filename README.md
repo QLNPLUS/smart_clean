@@ -48,13 +48,12 @@
 
 ## 材质
 
-界面不依赖原版箱子贴图，使用自绘资源：
+界面背景直接使用原版箱子贴图 `minecraft:textures/gui/container/generic_54.png`，和其它容器界面风格一致，不需要自绘面板。原版没有的资源只有两样，由 [tools/gen_textures.py](tools/gen_textures.py) 程序化生成（Pillow 逐像素绘制，非 AI 生图，配色取原版 GUI 调色板 #C6C6C6 面 / 黑边 / 白高光 / #555555 阴影）：
 
-- `assets/smartclean/textures/gui/trash_panel.png`（176×222 面板，含 54 + 27 + 9 个槽位凹槽）
 - `assets/smartclean/textures/gui/page_buttons.png`（28×96，左右 × 普通/悬停/禁用 三态）
-- `icon.png`（模组列表图标，`mods.toml` / `neoforge.mods.toml` 的 `logoFile`）
+- `icon.png`（模组列表图标，写进 `mods.toml` / `neoforge.mods.toml` 的 `logoFile`）
 
-三张图由 [tools/gen_textures.py](tools/gen_textures.py) 程序化生成（Pillow 逐像素绘制，非 AI 生图），改脚本后运行 `python tools/gen_textures.py <输出目录>` 即可重新出图，再把产物拷进各版本的 `src/main/resources`。
+改脚本后运行 `python tools/gen_textures.py <输出目录>` 重新出图，再把产物拷进各版本的 `src/main/resources`。
 
 ## 客户端要求
 
