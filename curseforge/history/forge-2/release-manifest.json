@@ -1,0 +1,58 @@
+{
+  "files": [
+    {
+      "minecraft": "1.20.1",
+      "artifact": "versions/1.20.1-forge/build/libs/smartclean-1.20.1-forge-1.0.1.jar",
+      "sha256": "8d404aaa26d7e8950dbf5ea45cf414e2341be59cbe60e8d15ea9960183371c7f",
+      "metadata": {
+        "changelog": "SmartClean 1.0.1 — bug-fix release.\n\n- Trash GUI page count now follows the configured `trash.maxPages`, so pages 2..8 are really reachable instead of always showing 1 / 1.\n- Page arrows moved into a transparent side gutter of the widened container screen; JEI no longer covers them or swallows the clicks.\n- The page-arrow texture is sampled with its real 28x96 size (Forge 1.20.1 previously sampled the wrong region and drew black blocks).\n- Clicking a trash slot behaves like vanilla grabbing: the item follows the cursor and you place it yourself; leftovers are put back when the inventory is full, and a carried stack is returned to the inventory on close instead of dropping.\n- Fixed a client/server page mismatch where the client kept rendering the first page while the server took items from another page, which made items disappear on click.\n- The client-side trash view is now read-only, so local click prediction can no longer consume the shared trash store before the server takes the item.\n- Configuration moved from `serverconfig` to `config/smartclean-common.toml`; new `trash.playerInsert` (default false) lets players put items into the trash themselves.\n- Removed the per-slot countdown text from the trash GUI.\n\n---\nSmartClean 1.0.1 修复版。\n\n- 回收站页数改为跟随配置 `trash.maxPages`，第 2～8 页现在真的能翻到，不再永远显示 1 / 1。\n- 翻页箭头移入界面加宽后的透明侧边带，JEI 不再覆盖它、也不会抢走点击。\n- 翻页贴图按真实的 28x96 尺寸采样（Forge 1.20.1 之前采样到错误区域，显示成黑块）。\n- 点击回收站槽位恢复原版抓取语义：物品跟到光标、由玩家自己放进背包；背包放不下时原样退回，关界面时光标上的物品收回背包而不是掉落。\n- 修复客户端与服务端页码错位：客户端仍在渲染第一页时服务端已经从另一页取物，导致点击后物品消失。\n- 客户端回收站视图改为只读，本地点击预测不再提前消耗与服务端共享的回收站存储。\n- 配置从 serverconfig 移到 `config/smartclean-common.toml`；新增 `trash.playerInsert`（默认 false），打开后玩家可自行把物品放进回收站。\n- 移除回收站槽位上的倒计时文字显示。\n",
+        "changelogType": "markdown",
+        "displayName": "smartclean-1.20.1-forge-1.0.1",
+        "releaseType": "release",
+        "gameVersions": [
+          "1.20.1",
+          "Forge",
+          "Java 17",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "1.21.1",
+      "artifact": "versions/1.21.1-neoforge/build/libs/smartclean-1.21.1-neoforge-1.0.1.jar",
+      "sha256": "3dcffdca5872a8e9dc3d89ac487a585988927fb3314518ff6ac55495e2084b08",
+      "metadata": {
+        "changelog": "SmartClean 1.0.1 — bug-fix release.\n\n- Trash GUI page count now follows the configured `trash.maxPages`, so pages 2..8 are really reachable instead of always showing 1 / 1.\n- Page arrows moved into a transparent side gutter of the widened container screen; JEI no longer covers them or swallows the clicks.\n- The page-arrow texture is sampled with its real 28x96 size (Forge 1.20.1 previously sampled the wrong region and drew black blocks).\n- Clicking a trash slot behaves like vanilla grabbing: the item follows the cursor and you place it yourself; leftovers are put back when the inventory is full, and a carried stack is returned to the inventory on close instead of dropping.\n- Fixed a client/server page mismatch where the client kept rendering the first page while the server took items from another page, which made items disappear on click.\n- The client-side trash view is now read-only, so local click prediction can no longer consume the shared trash store before the server takes the item.\n- Configuration moved from `serverconfig` to `config/smartclean-common.toml`; new `trash.playerInsert` (default false) lets players put items into the trash themselves.\n- Removed the per-slot countdown text from the trash GUI.\n\n---\nSmartClean 1.0.1 修复版。\n\n- 回收站页数改为跟随配置 `trash.maxPages`，第 2～8 页现在真的能翻到，不再永远显示 1 / 1。\n- 翻页箭头移入界面加宽后的透明侧边带，JEI 不再覆盖它、也不会抢走点击。\n- 翻页贴图按真实的 28x96 尺寸采样（Forge 1.20.1 之前采样到错误区域，显示成黑块）。\n- 点击回收站槽位恢复原版抓取语义：物品跟到光标、由玩家自己放进背包；背包放不下时原样退回，关界面时光标上的物品收回背包而不是掉落。\n- 修复客户端与服务端页码错位：客户端仍在渲染第一页时服务端已经从另一页取物，导致点击后物品消失。\n- 客户端回收站视图改为只读，本地点击预测不再提前消耗与服务端共享的回收站存储。\n- 配置从 serverconfig 移到 `config/smartclean-common.toml`；新增 `trash.playerInsert`（默认 false），打开后玩家可自行把物品放进回收站。\n- 移除回收站槽位上的倒计时文字显示。\n",
+        "changelogType": "markdown",
+        "displayName": "smartclean-1.21.1-neoforge-1.0.1",
+        "releaseType": "release",
+        "gameVersions": [
+          "1.21.1",
+          "NeoForge",
+          "Java 21",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "26.1.2",
+      "artifact": "versions/26.1.2-neoforge/build/libs/smartclean-26.1.2-neoforge-1.0.1.jar",
+      "sha256": "497e05f7fcb1181df697b2b7554505ec78b52e11a3eb192191acb4b2e6167591",
+      "metadata": {
+        "changelog": "SmartClean 1.0.1 — bug-fix release.\n\n- Trash GUI page count now follows the configured `trash.maxPages`, so pages 2..8 are really reachable instead of always showing 1 / 1.\n- Page arrows moved into a transparent side gutter of the widened container screen; JEI no longer covers them or swallows the clicks.\n- The page-arrow texture is sampled with its real 28x96 size (Forge 1.20.1 previously sampled the wrong region and drew black blocks).\n- Clicking a trash slot behaves like vanilla grabbing: the item follows the cursor and you place it yourself; leftovers are put back when the inventory is full, and a carried stack is returned to the inventory on close instead of dropping.\n- Fixed a client/server page mismatch where the client kept rendering the first page while the server took items from another page, which made items disappear on click.\n- The client-side trash view is now read-only, so local click prediction can no longer consume the shared trash store before the server takes the item.\n- Configuration moved from `serverconfig` to `config/smartclean-common.toml`; new `trash.playerInsert` (default false) lets players put items into the trash themselves.\n- Removed the per-slot countdown text from the trash GUI.\n\n---\nSmartClean 1.0.1 修复版。\n\n- 回收站页数改为跟随配置 `trash.maxPages`，第 2～8 页现在真的能翻到，不再永远显示 1 / 1。\n- 翻页箭头移入界面加宽后的透明侧边带，JEI 不再覆盖它、也不会抢走点击。\n- 翻页贴图按真实的 28x96 尺寸采样（Forge 1.20.1 之前采样到错误区域，显示成黑块）。\n- 点击回收站槽位恢复原版抓取语义：物品跟到光标、由玩家自己放进背包；背包放不下时原样退回，关界面时光标上的物品收回背包而不是掉落。\n- 修复客户端与服务端页码错位：客户端仍在渲染第一页时服务端已经从另一页取物，导致点击后物品消失。\n- 客户端回收站视图改为只读，本地点击预测不再提前消耗与服务端共享的回收站存储。\n- 配置从 serverconfig 移到 `config/smartclean-common.toml`；新增 `trash.playerInsert`（默认 false），打开后玩家可自行把物品放进回收站。\n- 移除回收站槽位上的倒计时文字显示。\n",
+        "changelogType": "markdown",
+        "displayName": "smartclean-26.1.2-neoforge-1.0.1",
+        "releaseType": "release",
+        "gameVersions": [
+          "26.1.2",
+          "NeoForge",
+          "Java 25",
+          "Client",
+          "Server"
+        ]
+      }
+    }
+  ]
+}
