@@ -68,8 +68,11 @@ public class TrashMenu extends AbstractContainerMenu {
         return remaining.clone();
     }
 
+    /** 以回收站实际页数为准：服务端的 pageCount 字段不会被填充，必须查 store（否则翻页会被 clamp 回第 1 页）。 */
     public void setPage(int page) {
-        int max = Math.max(0, pageCount - 1);
+        int count = Math.max(1, SmartClean.SERVICE.getStore().pageCount());
+        this.pageCount = count;
+        int max = count - 1;
         this.page = Math.max(0, Math.min(page, max));
         this.view.setPage(this.page);
     }
