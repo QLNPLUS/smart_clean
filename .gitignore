@@ -1,0 +1,27 @@
+# 上游参考源码（只读，不纳入版本控制）
+_ref/
+
+# 各版本的 git worktree 工作目录（工程内容由各自分支管理）
+versions/
+
+# Gradle / 构建产物
+.gradle/
+build/
+**/build/
+run/
+runs/
+run-data/
+logs/
+*.log
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+eclipse/
+out/
+
+# 系统
+.DS_Store
+Thumbs.db
