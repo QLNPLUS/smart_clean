@@ -56,7 +56,11 @@ public class TrashPageView implements Container {
 
     @Override
     public ItemStack getItem(int slot) {
-        return store.getItem(page, slot);
+        ItemStack current = store.getItem(page, slot);
+        // 只读视图（客户端）一律返回副本：单人游戏里这份 store 与服务端共享，
+        // 客户端任何 shrink/merge 都会改到服务端看到的那份对象。
+        if (canMutateStore || current.isEmpty()) return current;
+        return current.copy();
     }
 
     @Override

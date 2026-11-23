@@ -102,6 +102,11 @@ public class TrashMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
+        // Shift 点击只由服务端处理：客户端预测会在共享的回收站存储上先做一遍移动，
+        // 服务端随后就取不到物品，表现为"Shift 点击后物品直接消失"。
+        if (player.level().isClientSide()) {
+            return ItemStack.EMPTY;
+        }
         Slot slot = index >= 0 && index < this.slots.size() ? this.slots.get(index) : null;
         if (slot == null || !slot.hasItem()) return ItemStack.EMPTY;
         if (index >= TRASH_SLOTS) return ItemStack.EMPTY;
