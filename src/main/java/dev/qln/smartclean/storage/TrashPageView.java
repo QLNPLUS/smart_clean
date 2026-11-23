@@ -1,5 +1,6 @@
 package dev.qln.smartclean.storage;
 
+import dev.qln.smartclean.config.SCConfig;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -78,7 +79,7 @@ public class TrashPageView implements Container {
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return false;
+        return SCConfig.PLAYER_INSERT.get();
     }
 
     @Override
