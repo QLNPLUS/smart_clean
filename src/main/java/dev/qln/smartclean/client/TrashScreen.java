@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("smartclean", "textures/gui/trash_panel.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
 
     private static final ResourceLocation BUTTONS = ResourceLocation.fromNamespaceAndPath("smartclean", "textures/gui/page_buttons.png");
     private static final int BTN_W = 14;
@@ -42,7 +42,8 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, 125);
+        graphics.blit(TEXTURE, x, y + 125, 0, 126, this.imageWidth, 96);
 
         int buttonY = this.topPos + (this.imageHeight - BTN_H) / 2;
         boolean canPrev = this.menu.getPage() > 0;
