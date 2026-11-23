@@ -93,26 +93,6 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         graphics.blit(BUTTONS, x, y, u, v, BTN_W, BTN_H, BTN_TEX_W, BTN_TEX_H);
     }
 
-    /** 槽位倒计时画在物品之上（标签阶段在物品之后执行），白色带阴影保证压在图标上也清晰可读。 */
-    private void renderSlotTimers(GuiGraphics graphics) {
-        for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
-            int seconds = this.menu.getRemainingSeconds(slot);
-            if (seconds < 0) continue;
-            int col = slot % 9;
-            int row = slot / 9;
-            int x = SIDEBAR + 8 + col * 18 + 1;
-            int y = 18 + row * 18 + 1;
-            String text = formatSeconds(seconds);
-            graphics.drawString(this.font, text, x, y, 0xFFFFFFFF, true);
-        }
-    }
-
-    private static String formatSeconds(int seconds) {
-        if (seconds >= 3600) return (seconds / 3600) + "h";
-        if (seconds >= 120) return (seconds / 60) + "m";
-        return seconds + "s";
-    }
-
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
@@ -126,7 +106,6 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         String items = "物品 " + this.menu.getTotalItems();
         int itemsWidth = this.font.width(items);
         graphics.drawString(this.font, items, right - itemsWidth, this.inventoryLabelY, 0x606060, false);
-        renderSlotTimers(graphics);
     }
 
     @Override
