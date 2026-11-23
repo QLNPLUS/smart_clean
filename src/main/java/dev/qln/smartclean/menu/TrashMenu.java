@@ -6,7 +6,6 @@ import dev.qln.smartclean.storage.TrashStore;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -31,7 +30,8 @@ public class TrashMenu extends AbstractContainerMenu {
     public TrashMenu(int windowId, Inventory playerInventory) {
         super(SCMenus.TRASH.get(), windowId);
         this.playerInventory = playerInventory;
-        this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0);
+        boolean clientView = playerInventory.player.level().isClientSide;
+        this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0, !clientView);
 
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 9; col++) {
@@ -100,16 +100,6 @@ public class TrashMenu extends AbstractContainerMenu {
         return true;
     }
 
-    /** 诊断用：记录原版点击流程前后 carried 与目标槽位内容。 */
-    @Override
-    public void clicked(int slotId, int button, ClickType clickType, Player player) {
-        ItemStack before = this.getCarried().copy();
-        ItemStack inSlot = (slotId >= 0 && slotId < this.slots.size()) ? this.slots.get(slotId).getItem().copy() : ItemStack.EMPTY;
-        super.clicked(slotId, button, clickType, player);
-        SmartClean.LOGGER.info("[SC-DEBUG] clicked slot={} button={} type={} client={} slotBefore={}x{} carried {} -> {}",
-                slotId, button, clickType, player.level().isClientSide,
-                inSlot.getCount(), inSlot.getItem(), before.getCount(), this.getCarried().getCount());
-    }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
