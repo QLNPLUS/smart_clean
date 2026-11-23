@@ -4,6 +4,14 @@ _ref/
 # 各版本的 git worktree 工作目录（工程内容由各自分支管理）
 versions/
 
+# 宿主运行目录
+.narrafork/
+
+# 发布流程的可再生/临时产物
+curseforge/game-versions.json
+curseforge/upload-attempt-*.json
+curseforge/upload-response-*.txt
+
 # Gradle / 构建产物
 .gradle/
 build/
