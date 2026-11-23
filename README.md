@@ -20,13 +20,21 @@
 
 ## 构建
 
-各版本目录内执行：
+在对应 worktree 内执行：
 
-```bash
-./gradlew build
-```
+| 版本 | 构建命令 |
+| --- | --- |
+| `versions/1.20.1-forge` | `./gradlew build` |
+| `versions/1.21.1-neoforge` | `./gradlew build --offline` |
+| `versions/26.1.2-neoforge` | `./gradlew build --offline` |
 
-产物位于对应 worktree 的 `build/libs/`。首次构建需要对应的 JDK（17 / 21 / 25），本机 Gradle toolchain 已缓存 Zulu 25，可直接使用。
+三个版本均已在当前机器构建通过，产物位于各自 `build/libs/`：
+
+- `smartclean-1.20.1-forge-2.0.0.jar`（Forge 1.20.1-47.3.0，JDK 17）
+- `smartclean-1.21.1-neoforge-2.0.0.jar`（NeoForge 21.1.209，JDK 21）
+- `smartclean-26.1.2-neoforge-2.0.0.jar`（NeoForge 26.1.2.114，JDK 25）
+
+注意：当前网络下 `maven.neoforged.net` 不可达，NeoForge 版本依赖本机 Gradle 缓存，需要带 `--offline`；Forge 1.20.1 从 `maven.minecraftforge.net` 拉取 MCP 数据（该域名可达，首次构建需联网）。JDK 由 Gradle toolchain 指定：17 / 21 走系统安装，25 走 `~/.gradle/jdks` 下的 Zulu 25。
 
 ## 功能清单
 
