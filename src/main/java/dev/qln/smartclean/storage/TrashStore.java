@@ -50,9 +50,9 @@ public class TrashStore {
         }
     }
 
-    /** GUI 可显示的页数（至少 1 页）。 */
+    /** GUI 可显示的页数：始终等于配置的最大页数（至少 1 页），空白页也能翻过去查看。 */
     public int pageCount() {
-        return Math.max(1, stacks.size());
+        return Math.max(1, maxPages);
     }
 
     public ItemStack getItem(int page, int slot) {
