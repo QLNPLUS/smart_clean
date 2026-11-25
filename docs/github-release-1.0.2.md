@@ -10,6 +10,7 @@ Fixes Shift-click losing items inside the trash GUI.
 | `smartclean-1.20.1-forge-1.0.2.jar` | Forge 47.3.0 | 1.20.1 | 17 |
 | `smartclean-1.21.1-neoforge-1.0.2.jar` | NeoForge 21.1.209 | 1.21.1 | 21 |
 | `smartclean-26.1.2-neoforge-1.0.2.jar` | NeoForge 26.1.2.114 | 26.1.2 | 25 |
+| `smartclean-26.2-neoforge-1.0.2.jar` | NeoForge 26.2.0.95 | 26.2 | 25 |
 
 Client and server are both required. / 客户端与服务端均需安装。
 

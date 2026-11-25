@@ -10,13 +10,13 @@ Dropped items are swept into a shared trash bin instead of being deleted. Player
 
 - **Paged trash GUI.** The bin holds many pages of 54 slots each. Page arrows are drawn on the left and right side of the container screen, so no slot is wasted on a glass/button placeholder. `Esc` closes the screen as usual.
 - **Per-item sweep countdown.** Give any item ID its own lifetime in the world (e.g. cobblestone disappears after 180s) instead of waiting for the global cleanup cycle. These items are swept first, on their own timer.
-- **Per-item retention countdown.** Give any item ID its own retention time inside the bin (e.g. diamonds stay 600s while everything else clears in 120s). Each slot counts down independently and shows its remaining time in the corner.
+- **Per-item retention countdown.** Give any item ID its own retention time inside the bin (e.g. diamonds stay 600s while everything else clears in 120s). Each slot counts down independently, with retention priority over the global setting.
 - **Trash compression.** When enough of item A piles up in the bin, it is automatically converted into item B — for example 8 oak logs become 6 oak planks. Rules are written as `source_id,source_amount,target_id,target_amount`.
 - **Scheduled cleanup with warnings.** Configure the interval, and broadcast warnings at 60/30/10/5… seconds before each sweep.
 - **Blacklist.** Items on the blacklist are never swept and never purged.
 - **Void protection.** Items that fall below the world floor are lifted back to a safe position instead of vanishing.
 - **Gradient chat messages.** Message templates support `<gradient:#RRGGBB:#RRGGBB>text</gradient>`, colour-less placeholders such as `{time}`, `{entities}`, `{slots}` and `{keep}`, and hot reload.
-- **Config hot reload.** Edit and save `serverconfig/smartclean-server.toml`, or run `/smartclean reload`.
+- **Config hot reload.** Edit and save `config/smartclean-common.toml`, or run `/smartclean reload`.
 
 ## Commands
 
@@ -31,7 +31,7 @@ Dropped items are swept into a shared trash bin instead of being deleted. Player
 
 ## Configuration
 
-The file is generated on first start at `<world>/serverconfig/smartclean-server.toml`.
+The file is generated on first start at `config/smartclean-common.toml` (earlier versions used `serverconfig/smartclean-server.toml`).
 
 ```toml
 [general]
@@ -65,7 +65,7 @@ The page arrows and the countdown labels are rendered by the client, so **player
 
 ## Notes
 
-- Separate builds are published for each supported Minecraft / mod-loader combination; pick the file matching your server.
+- Separate builds are published for each supported Minecraft / mod-loader combination — Forge 1.20.1, NeoForge 1.21.1, NeoForge 26.1.2 and NeoForge 26.2; pick the file matching your server.
 - The bin is shared and global: every player sees the same pages. Take items early, they expire on their own timers.
 - Compression rules only look at item IDs, not NBT/components. Use them deliberately — a rule that runs away (target amount ≥ source amount for the same item) is rejected at load time.
 - Only one cleaner mod should manage drops on a server; running several cleaners at the same time leads to double sweeping.
@@ -90,13 +90,13 @@ SmartClean 是一个面向 Minecraft 服务端的掉落物清理与回收站模�
 
 - **分页回收站界面。** 每页 54 格、可翻多页。翻页箭头画在容器界面左右两侧，不再用玻璃或占位物品当按钮，每页 54 格全部可用；`Esc` 照常关闭界面。
 - **按物品 ID 的世界侧倒计时。** 可以给任意物品 ID 单独设定在世界上存在的时间（例如圆石 180 秒后被扫走），不必等全局清理周期——它们会优先按自己的计时被回收。
-- **按物品 ID 的回收站保留倒计时。** 可以给任意物品 ID 单独设定在回收站里的保留时间（例如钻石留 600 秒、其它物品 120 秒）。每个槽位独立倒计时，并在槽位角上显示剩余时间。
+- **按物品 ID 的回收站保留倒计时。** 可以给任意物品 ID 单独设定在回收站里的保留时间（例如钻石留 600 秒、其它物品 120 秒）。每个槽位按自己的到期时间独立清空。
 - **物品压缩。** 某种物品在回收站里堆够数量后自动转换成另一种物品，例如 8 个原木换成 6 个木板。规则写作 `源ID,源数量,目标ID,目标数量`。
 - **定时清理与预警。** 可配置清理间隔，并在清理前 60/30/10/5… 秒逐档广播预警。
 - **黑名单。** 黑名单物品不会被扫走，也不会被清空。
 - **虚空保护。** 掉进虚空的物品会被拉回到安全位置，而不是直接消失。
 - **渐变消息。** 消息模板支持 `<gradient:#RRGGBB:#RRGGBB>文本</gradient>`、`{time}`／`{entities}`／`{slots}`／`{keep}` 等占位符，并支持热重载。
-- **配置热重载。** 编辑并保存 `serverconfig/smartclean-server.toml` 即生效，也可以执行 `/smartclean reload`。
+- **配置热重载。** 编辑并保存 `config/smartclean-common.toml` 即生效，也可以执行 `/smartclean reload`。
 
 ## 命令
 
@@ -111,7 +111,7 @@ SmartClean 是一个面向 Minecraft 服务端的掉落物清理与回收站模�
 
 ## 配置
 
-首次启动时会在 `<存档目录>/serverconfig/smartclean-server.toml` 生成配置文件。
+首次启动时会在 `config/smartclean-common.toml` 生成配置文件（早期版本用的是 `serverconfig/smartclean-server.toml`）。
 
 ```toml
 [general]
