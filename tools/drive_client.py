@@ -60,8 +60,8 @@ class Client:
     def screen(self):
         return self.status()["screen"].split(".")[-1]
 
-    def click(self, x, y, button=0, pause=0.45):
-        q = f"x={int(x)}&y={int(y)}&button={button}&modifiers=0"
+    def click(self, x, y, button=0, modifiers=0, pause=0.45):
+        q = f"x={int(x)}&y={int(y)}&button={button}&modifiers={modifiers}"
         self._get("/move?" + q)
         time.sleep(0.05)
         self._get("/press?" + q)
@@ -184,7 +184,8 @@ def main():
     elif a.action == "click":
         x, y = int(a.args[0]), int(a.args[1])
         button = int(a.args[2]) if len(a.args) > 2 else 0
-        c.click(x, y, button)
+        modifiers = int(a.args[3]) if len(a.args) > 3 else 0
+        c.click(x, y, button, modifiers)
         print("screen:", c.screen())
     elif a.action == "key":
         c.key(int(a.args[0]))
