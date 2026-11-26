@@ -30,7 +30,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     private static final int BTN_TEX_H = 96;
 
     /** 字体层：物品图标走独立的 item buffer，冲刷晚于批处理文字，必须显式分层 + 分块 flush 才压得住。 */
-    private static final float TIMER_LAYER_Z = 250.0f;
+    private static final float TIMER_LAYER_Z = 450.0f;
 
 
     /** 箱子贴图两侧各留出的透明占位带宽度（不放任何像素，只用来加宽界面范围并容纳翻页按钮）。 */
@@ -54,8 +54,8 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
-        renderSlotTimersOnTop(graphics);
         this.renderTooltip(graphics, mouseX, mouseY);
+        renderSlotTimersOnTop(graphics);
     }
 
     /** 槽位倒计时：基础层与物品先落屏，再在显式 Z 层画字并立即 flush，保证文字在图标之上。 */
