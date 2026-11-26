@@ -10,7 +10,7 @@ Dropped items are swept into a shared trash bin instead of being deleted. Player
 
 - **Paged trash GUI.** The bin holds many pages of 54 slots each. Page arrows are drawn on the left and right side of the container screen, so no slot is wasted on a glass/button placeholder. `Esc` closes the screen as usual.
 - **Per-item sweep countdown.** Give any item ID its own lifetime in the world (e.g. cobblestone disappears after 180s) instead of waiting for the global cleanup cycle. These items are swept first, on their own timer.
-- **Per-item retention countdown.** Give any item ID its own retention time inside the bin (e.g. diamonds stay 600s while everything else clears in 120s). Each slot counts down independently, with retention priority over the global setting.
+- **Per-item retention countdown.** Give any item ID its own retention time inside the bin (e.g. diamonds stay 600s while everything else clears in 120s). Each slot counts down independently, with retention priority over the global setting. Set `trash.showSlotTimers = true` to also draw the remaining time in the slot's top-left corner (off by default).
 - **Trash compression.** When enough of item A piles up in the bin, it is automatically converted into item B — for example 8 oak logs become 6 oak planks. Rules are written as `source_id,source_amount,target_id,target_amount`.
 - **Scheduled cleanup with warnings.** Configure the interval, and broadcast warnings at 60/30/10/5… seconds before each sweep.
 - **Blacklist.** Items on the blacklist are never swept and never purged.
@@ -90,7 +90,7 @@ SmartClean 是一个面向 Minecraft 服务端的掉落物清理与回收站模�
 
 - **分页回收站界面。** 每页 54 格、可翻多页。翻页箭头画在容器界面左右两侧，不再用玻璃或占位物品当按钮，每页 54 格全部可用；`Esc` 照常关闭界面。
 - **按物品 ID 的世界侧倒计时。** 可以给任意物品 ID 单独设定在世界上存在的时间（例如圆石 180 秒后被扫走），不必等全局清理周期——它们会优先按自己的计时被回收。
-- **按物品 ID 的回收站保留倒计时。** 可以给任意物品 ID 单独设定在回收站里的保留时间（例如钻石留 600 秒、其它物品 120 秒）。每个槽位按自己的到期时间独立清空。
+- **按物品 ID 的回收站保留倒计时。** 可以给任意物品 ID 单独设定在回收站里的保留时间（例如钻石留 600 秒、其它物品 120 秒）。每个槽位按自己的到期时间独立清空。把 `trash.showSlotTimers` 设为 `true` 可以在槽位左上角看到剩余时间（默认关闭）。
 - **物品压缩。** 某种物品在回收站里堆够数量后自动转换成另一种物品，例如 8 个原木换成 6 个木板。规则写作 `源ID,源数量,目标ID,目标数量`。
 - **定时清理与预警。** 可配置清理间隔，并在清理前 60/30/10/5… 秒逐档广播预警。
 - **黑名单。** 黑名单物品不会被扫走，也不会被清空。

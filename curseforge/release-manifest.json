@@ -2,12 +2,12 @@
   "files": [
     {
       "minecraft": "1.20.1",
-      "artifact": "versions/1.20.1-forge/build/libs/smartclean-1.20.1-forge-1.0.2.jar",
-      "sha256": "30b83c64fa1eb972a4099c6411c6c7f24e734bf7ebd878f26735d546042bf3b4",
+      "artifact": "versions\\1.20.1-forge\\build\\libs\\smartclean-1.20.1-forge-1.0.3.jar",
+      "sha256": "6fa157fae767af13fa0b874aa9c6b824f15d0eb2290ed19bbceb35f7f1e5a092",
       "metadata": {
-        "changelog": "SmartClean 1.0.2 — fixes Shift-click losing items in the trash GUI.\n\n- Shift-clicking a trash slot no longer deletes the item: quick-move is handled by the server only, and the client-side read-only view now returns copies instead of mutating the store shared with the server.\n- Everything from 1.0.1 is included: real paging via `trash.maxPages`, page arrows in a transparent side gutter that JEI never covers, correct 28x96 arrow texture sampling, vanilla-style grabbing, config in `config/smartclean-common.toml` with `trash.playerInsert`, and no per-slot countdown text.\n- Adds a NeoForge 26.2 build (same code as 26.1.2, compiled against NeoForge 26.2.0.95).\n\n---\nSmartClean 1.0.2：修复回收站里 Shift 点击导致物品丢失。\n\n- Shift 点击回收站槽位不再吞物品：快速移动只由服务端处理，客户端只读视图改为返回副本，不再改动与服务端共享的存储。\n- 包含 1.0.1 的全部改动：按 `trash.maxPages` 真正分页、翻页箭头位于 JEI 不会覆盖的透明侧边带、按真实 28x96 采样贴图、原版抓取语义、配置位于 `config/smartclean-common.toml` 且新增 `trash.playerInsert`、移除槽位倒计时文字。\n- 新增 NeoForge 26.2 构建（代码与 26.1.2 一致，针对 NeoForge 26.2.0.95 编译）。\n",
+        "changelog": "SmartClean 1.0.3 — optional per-slot countdown text, now drawn above the item icons.\n\n- New `trash.showSlotTimers` (default false): turn it on to show each slot's remaining retention time in the top-left corner; off by default so icons stay unobstructed.\n- The countdown is really above the icons now. Item icons live in a separate item buffer that flushed after the batched text; Forge/NeoForge 1.20.1-1.21.1 first flush the base layer and item buffer, then draw the text on an explicit z=250 layer with an in-block flush; 26.x's GuiGraphicsExtractor has no Z axis and opens a new stratum instead.\n- Text colour is opaque white 0xFFFFFFFF (26.x text colours are full ARGB and six-digit values render invisible).\n- Everything from 1.0.2 is included: the Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.3：槽位剩余时间改为可选开关，并且真正画在物品图标之上。\n\n- 新增 `trash.showSlotTimers`（默认 false）：打开后每个格子左上角显示该物品的剩余保留时间；默认关闭，物品图标不被文字压住。\n- 倒计时现在真的在图标上层。物品图标走独立的 item buffer，晚于批处理文字落屏；1.20.1～1.21.1 改成先冲刷基础层与物品、再在 z=250 的显式层画字并在块内 flush；26.1.2/26.2 的 GuiGraphicsExtractor 没有 z 轴，改用 nextStratum 另起一层。\n- 文字颜色为不透明白色 0xFFFFFFFF（26.x 的文字颜色是完整 ARGB，六位色值会完全透明）。\n- 包含 1.0.2 的全部改动：Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
         "changelogType": "markdown",
-        "displayName": "smartclean-1.20.1-forge-1.0.2",
+        "displayName": "smartclean-1.20.1-forge-1.0.3",
         "releaseType": "release",
         "gameVersions": [
           "1.20.1",
@@ -20,12 +20,12 @@
     },
     {
       "minecraft": "1.21.1",
-      "artifact": "versions/1.21.1-neoforge/build/libs/smartclean-1.21.1-neoforge-1.0.2.jar",
-      "sha256": "a74abeada341115c8be7ad4dbb3ab1f982dc521e0efafed447b542df6c19cfce",
+      "artifact": "versions\\1.21.1-neoforge\\build\\libs\\smartclean-1.21.1-neoforge-1.0.3.jar",
+      "sha256": "b9d9da9d3a5afa6106bf66247f50e141dc0d840531e479029bb0ae546f26bd6e",
       "metadata": {
-        "changelog": "SmartClean 1.0.2 — fixes Shift-click losing items in the trash GUI.\n\n- Shift-clicking a trash slot no longer deletes the item: quick-move is handled by the server only, and the client-side read-only view now returns copies instead of mutating the store shared with the server.\n- Everything from 1.0.1 is included: real paging via `trash.maxPages`, page arrows in a transparent side gutter that JEI never covers, correct 28x96 arrow texture sampling, vanilla-style grabbing, config in `config/smartclean-common.toml` with `trash.playerInsert`, and no per-slot countdown text.\n- Adds a NeoForge 26.2 build (same code as 26.1.2, compiled against NeoForge 26.2.0.95).\n\n---\nSmartClean 1.0.2：修复回收站里 Shift 点击导致物品丢失。\n\n- Shift 点击回收站槽位不再吞物品：快速移动只由服务端处理，客户端只读视图改为返回副本，不再改动与服务端共享的存储。\n- 包含 1.0.1 的全部改动：按 `trash.maxPages` 真正分页、翻页箭头位于 JEI 不会覆盖的透明侧边带、按真实 28x96 采样贴图、原版抓取语义、配置位于 `config/smartclean-common.toml` 且新增 `trash.playerInsert`、移除槽位倒计时文字。\n- 新增 NeoForge 26.2 构建（代码与 26.1.2 一致，针对 NeoForge 26.2.0.95 编译）。\n",
+        "changelog": "SmartClean 1.0.3 — optional per-slot countdown text, now drawn above the item icons.\n\n- New `trash.showSlotTimers` (default false): turn it on to show each slot's remaining retention time in the top-left corner; off by default so icons stay unobstructed.\n- The countdown is really above the icons now. Item icons live in a separate item buffer that flushed after the batched text; Forge/NeoForge 1.20.1-1.21.1 first flush the base layer and item buffer, then draw the text on an explicit z=250 layer with an in-block flush; 26.x's GuiGraphicsExtractor has no Z axis and opens a new stratum instead.\n- Text colour is opaque white 0xFFFFFFFF (26.x text colours are full ARGB and six-digit values render invisible).\n- Everything from 1.0.2 is included: the Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.3：槽位剩余时间改为可选开关，并且真正画在物品图标之上。\n\n- 新增 `trash.showSlotTimers`（默认 false）：打开后每个格子左上角显示该物品的剩余保留时间；默认关闭，物品图标不被文字压住。\n- 倒计时现在真的在图标上层。物品图标走独立的 item buffer，晚于批处理文字落屏；1.20.1～1.21.1 改成先冲刷基础层与物品、再在 z=250 的显式层画字并在块内 flush；26.1.2/26.2 的 GuiGraphicsExtractor 没有 z 轴，改用 nextStratum 另起一层。\n- 文字颜色为不透明白色 0xFFFFFFFF（26.x 的文字颜色是完整 ARGB，六位色值会完全透明）。\n- 包含 1.0.2 的全部改动：Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
         "changelogType": "markdown",
-        "displayName": "smartclean-1.21.1-neoforge-1.0.2",
+        "displayName": "smartclean-1.21.1-neoforge-1.0.3",
         "releaseType": "release",
         "gameVersions": [
           "1.21.1",
@@ -38,12 +38,12 @@
     },
     {
       "minecraft": "26.1.2",
-      "artifact": "versions/26.1.2-neoforge/build/libs/smartclean-26.1.2-neoforge-1.0.2.jar",
-      "sha256": "6d67e7a76b987585cb97eb5b414ab249c737d0d526b5eacb14d998bd501c6bef",
+      "artifact": "versions\\26.1.2-neoforge\\build\\libs\\smartclean-26.1.2-neoforge-1.0.3.jar",
+      "sha256": "4aab8339725fb2166d986189dc4327fca699b5b2efa0891699cca5f50c6587db",
       "metadata": {
-        "changelog": "SmartClean 1.0.2 — fixes Shift-click losing items in the trash GUI.\n\n- Shift-clicking a trash slot no longer deletes the item: quick-move is handled by the server only, and the client-side read-only view now returns copies instead of mutating the store shared with the server.\n- Everything from 1.0.1 is included: real paging via `trash.maxPages`, page arrows in a transparent side gutter that JEI never covers, correct 28x96 arrow texture sampling, vanilla-style grabbing, config in `config/smartclean-common.toml` with `trash.playerInsert`, and no per-slot countdown text.\n- Adds a NeoForge 26.2 build (same code as 26.1.2, compiled against NeoForge 26.2.0.95).\n\n---\nSmartClean 1.0.2：修复回收站里 Shift 点击导致物品丢失。\n\n- Shift 点击回收站槽位不再吞物品：快速移动只由服务端处理，客户端只读视图改为返回副本，不再改动与服务端共享的存储。\n- 包含 1.0.1 的全部改动：按 `trash.maxPages` 真正分页、翻页箭头位于 JEI 不会覆盖的透明侧边带、按真实 28x96 采样贴图、原版抓取语义、配置位于 `config/smartclean-common.toml` 且新增 `trash.playerInsert`、移除槽位倒计时文字。\n- 新增 NeoForge 26.2 构建（代码与 26.1.2 一致，针对 NeoForge 26.2.0.95 编译）。\n",
+        "changelog": "SmartClean 1.0.3 — optional per-slot countdown text, now drawn above the item icons.\n\n- New `trash.showSlotTimers` (default false): turn it on to show each slot's remaining retention time in the top-left corner; off by default so icons stay unobstructed.\n- The countdown is really above the icons now. Item icons live in a separate item buffer that flushed after the batched text; Forge/NeoForge 1.20.1-1.21.1 first flush the base layer and item buffer, then draw the text on an explicit z=250 layer with an in-block flush; 26.x's GuiGraphicsExtractor has no Z axis and opens a new stratum instead.\n- Text colour is opaque white 0xFFFFFFFF (26.x text colours are full ARGB and six-digit values render invisible).\n- Everything from 1.0.2 is included: the Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.3：槽位剩余时间改为可选开关，并且真正画在物品图标之上。\n\n- 新增 `trash.showSlotTimers`（默认 false）：打开后每个格子左上角显示该物品的剩余保留时间；默认关闭，物品图标不被文字压住。\n- 倒计时现在真的在图标上层。物品图标走独立的 item buffer，晚于批处理文字落屏；1.20.1～1.21.1 改成先冲刷基础层与物品、再在 z=250 的显式层画字并在块内 flush；26.1.2/26.2 的 GuiGraphicsExtractor 没有 z 轴，改用 nextStratum 另起一层。\n- 文字颜色为不透明白色 0xFFFFFFFF（26.x 的文字颜色是完整 ARGB，六位色值会完全透明）。\n- 包含 1.0.2 的全部改动：Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
         "changelogType": "markdown",
-        "displayName": "smartclean-26.1.2-neoforge-1.0.2",
+        "displayName": "smartclean-26.1.2-neoforge-1.0.3",
         "releaseType": "release",
         "gameVersions": [
           "26.1.2",
@@ -56,12 +56,12 @@
     },
     {
       "minecraft": "26.2",
-      "artifact": "versions/26.2-neoforge/build/libs/smartclean-26.2-neoforge-1.0.2.jar",
-      "sha256": "3197bc9a1b5f00341269ff409e048c48267574b8a1828458c6d75d4ecab6c05b",
+      "artifact": "versions\\26.2-neoforge\\build\\libs\\smartclean-26.2-neoforge-1.0.3.jar",
+      "sha256": "cd8f831c6b3daa4c0dc42f8575fee75d7f8eb0ae89a5c8ba2f4ce3d6ac2d3fe0",
       "metadata": {
-        "changelog": "SmartClean 1.0.2 — fixes Shift-click losing items in the trash GUI.\n\n- Shift-clicking a trash slot no longer deletes the item: quick-move is handled by the server only, and the client-side read-only view now returns copies instead of mutating the store shared with the server.\n- Everything from 1.0.1 is included: real paging via `trash.maxPages`, page arrows in a transparent side gutter that JEI never covers, correct 28x96 arrow texture sampling, vanilla-style grabbing, config in `config/smartclean-common.toml` with `trash.playerInsert`, and no per-slot countdown text.\n- Adds a NeoForge 26.2 build (same code as 26.1.2, compiled against NeoForge 26.2.0.95).\n\n---\nSmartClean 1.0.2：修复回收站里 Shift 点击导致物品丢失。\n\n- Shift 点击回收站槽位不再吞物品：快速移动只由服务端处理，客户端只读视图改为返回副本，不再改动与服务端共享的存储。\n- 包含 1.0.1 的全部改动：按 `trash.maxPages` 真正分页、翻页箭头位于 JEI 不会覆盖的透明侧边带、按真实 28x96 采样贴图、原版抓取语义、配置位于 `config/smartclean-common.toml` 且新增 `trash.playerInsert`、移除槽位倒计时文字。\n- 新增 NeoForge 26.2 构建（代码与 26.1.2 一致，针对 NeoForge 26.2.0.95 编译）。\n",
+        "changelog": "SmartClean 1.0.3 — optional per-slot countdown text, now drawn above the item icons.\n\n- New `trash.showSlotTimers` (default false): turn it on to show each slot's remaining retention time in the top-left corner; off by default so icons stay unobstructed.\n- The countdown is really above the icons now. Item icons live in a separate item buffer that flushed after the batched text; Forge/NeoForge 1.20.1-1.21.1 first flush the base layer and item buffer, then draw the text on an explicit z=250 layer with an in-block flush; 26.x's GuiGraphicsExtractor has no Z axis and opens a new stratum instead.\n- Text colour is opaque white 0xFFFFFFFF (26.x text colours are full ARGB and six-digit values render invisible).\n- Everything from 1.0.2 is included: the Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.3：槽位剩余时间改为可选开关，并且真正画在物品图标之上。\n\n- 新增 `trash.showSlotTimers`（默认 false）：打开后每个格子左上角显示该物品的剩余保留时间；默认关闭，物品图标不被文字压住。\n- 倒计时现在真的在图标上层。物品图标走独立的 item buffer，晚于批处理文字落屏；1.20.1～1.21.1 改成先冲刷基础层与物品、再在 z=250 的显式层画字并在块内 flush；26.1.2/26.2 的 GuiGraphicsExtractor 没有 z 轴，改用 nextStratum 另起一层。\n- 文字颜色为不透明白色 0xFFFFFFFF（26.x 的文字颜色是完整 ARGB，六位色值会完全透明）。\n- 包含 1.0.2 的全部改动：Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
         "changelogType": "markdown",
-        "displayName": "smartclean-26.2-neoforge-1.0.2",
+        "displayName": "smartclean-26.2-neoforge-1.0.3",
         "releaseType": "release",
         "gameVersions": [
           "26.2",
