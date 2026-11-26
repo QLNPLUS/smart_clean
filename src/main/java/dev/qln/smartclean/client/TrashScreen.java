@@ -98,7 +98,31 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         String items = "物品 " + this.menu.getTotalItems();
         int itemsWidth = this.font.width(items);
         graphics.text(this.font, items, right - itemsWidth, this.inventoryLabelY, 0x606060, false);
+
+        // 另起一个渲染层：26.x 的先后由 stratum 顺序决定，这样倒计时才会压在物品图标之上
+        graphics.nextStratum();
+        renderSlotTimers(graphics);
     }
+
+    /** 槽位倒计时：26.x 的提取器用 stratum 决定先后，另起一层后这里的文字必然压在物品图标之上。 */
+    private void renderSlotTimers(GuiGraphicsExtractor graphics) {
+        for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
+            int seconds = this.menu.getRemainingSeconds(slot);
+            if (seconds < 0) continue;
+            int col = slot % 9;
+            int row = slot / 9;
+            int x = SIDEBAR + 8 + col * 18 + 1;
+            int y = 18 + row * 18 + 1;
+            graphics.text(this.font, formatSeconds(seconds), x, y, 0xFFFFFFFF, true);
+        }
+    }
+
+    private static String formatSeconds(int seconds) {
+        if (seconds >= 3600) return (seconds / 3600) + "h";
+        if (seconds >= 120) return (seconds / 60) + "m";
+        return seconds + "s";
+    }
+
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
