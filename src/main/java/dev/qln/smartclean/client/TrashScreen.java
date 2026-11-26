@@ -1,5 +1,6 @@
 package dev.qln.smartclean.client;
 
+import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.net.SCNetwork;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -106,6 +107,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
     /** 槽位倒计时：26.x 的提取器用 stratum 决定先后，另起一层后这里的文字必然压在物品图标之上。 */
     private void renderSlotTimers(GuiGraphicsExtractor graphics) {
+        if (!SCConfig.SHOW_SLOT_TIMERS.get()) return;
         for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
             int seconds = this.menu.getRemainingSeconds(slot);
             if (seconds < 0) continue;
