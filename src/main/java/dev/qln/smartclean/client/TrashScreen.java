@@ -1,5 +1,6 @@
 package dev.qln.smartclean.client;
 
+import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.net.SCNetwork;
 import net.minecraft.client.gui.GuiGraphics;
@@ -59,6 +60,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
     /** 槽位倒计时：基础层与物品先落屏，再在显式 Z 层画字并立即 flush，保证文字在图标之上。 */
     private void renderSlotTimersOnTop(GuiGraphics graphics) {
+        if (!SCConfig.SHOW_SLOT_TIMERS.get()) return;
         graphics.flush();
         Minecraft.getInstance().renderBuffers().bufferSource().endBatch();
         graphics.pose().pushPose();

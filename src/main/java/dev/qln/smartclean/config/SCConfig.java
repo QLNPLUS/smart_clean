@@ -19,6 +19,7 @@ public final class SCConfig {
     public static final ForgeConfigSpec.BooleanValue ANNOUNCE_MESSAGES;
     public static final ForgeConfigSpec.IntValue MAX_PAGES;
     public static final ForgeConfigSpec.BooleanValue PLAYER_INSERT;
+    public static final ForgeConfigSpec.BooleanValue SHOW_SLOT_TIMERS;
 
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEM_BLACKLIST;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> SWEEP_LIFETIMES;
@@ -64,6 +65,9 @@ public final class SCConfig {
                 .defineInRange("maxPages", 8, 1, 64);
         PLAYER_INSERT = b.comment("是否允许玩家把物品主动放进回收站槽位。默认 false：回收站只能取出，槽位不接受放入。")
                 .define("playerInsert", false);
+
+        SHOW_SLOT_TIMERS = b.comment("是否在回收站槽位左上角显示该物品的剩余保留时间。默认 false：只看物品，不被文字压住。")
+                .define("showSlotTimers", false);
         b.pop();
 
         b.push("blacklist");
