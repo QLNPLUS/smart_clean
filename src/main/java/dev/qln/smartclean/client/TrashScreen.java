@@ -5,6 +5,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.net.SCNetwork;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +30,10 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     private static final int BTN_TEX_W = 28;
     private static final int BTN_TEX_H = 96;
 
+    /** 字体层：物品图标走独立的 item buffer，冲刷晚于批处理文字，必须显式分层 + 分块 flush 才压得住。 */
+    private static final float TIMER_LAYER_Z = 250.0f;
+
+
     /** 箱子贴图两侧各留出的透明占位带宽度（不放任何像素，只用来加宽界面范围并容纳翻页按钮）。 */
     private static final int SIDEBAR = 22;
     private static final int VANILLA_W = 176;
@@ -49,8 +54,35 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+        renderSlotTimersOnTop(graphics);
         this.renderTooltip(graphics, mouseX, mouseY);
     }
+
+    /** 槽位倒计时：基础层与物品先落屏，再在显式 Z 层画字并立即 flush，保证文字在图标之上。 */
+    private void renderSlotTimersOnTop(GuiGraphics graphics) {
+        graphics.flush();
+        Minecraft.getInstance().renderBuffers().bufferSource().endBatch();
+        graphics.pose().pushPose();
+        graphics.pose().translate(0.0F, 0.0F, TIMER_LAYER_Z);
+        for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
+            int seconds = this.menu.getRemainingSeconds(slot);
+            if (seconds < 0) continue;
+            int col = slot % 9;
+            int row = slot / 9;
+            int x = this.leftPos + SIDEBAR + 8 + col * 18 + 1;
+            int y = this.topPos + 18 + row * 18 + 1;
+            graphics.drawString(this.font, formatSeconds(seconds), x, y, 0xFFFFFFFF, true);
+        }
+        graphics.flush();
+        graphics.pose().popPose();
+    }
+
+    private static String formatSeconds(int seconds) {
+        if (seconds >= 3600) return (seconds / 3600) + "h";
+        if (seconds >= 120) return (seconds / 60) + "m";
+        return seconds + "s";
+    }
+
 
     private int buttonTop() {
         return this.topPos + (this.imageHeight - BTN_H) / 2;
