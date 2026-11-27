@@ -35,7 +35,8 @@ public class SmartClean {
         NeoForge.EVENT_BUS.addListener(SERVICE::onEntityLeave);
         NeoForge.EVENT_BUS.addListener(SCNetwork::onServerTick);
 
-        SERVICE.applyConfig();
+        // 配置在 ModConfigEvent.Loading 里应用（SCConfig::onLoad）；构造阶段读会抛
+        // IllegalStateException: Cannot get config value before config is loaded。
         LOGGER.info("[SmartClean] initialized (NeoForge 1.21.1).");
     }
 }
