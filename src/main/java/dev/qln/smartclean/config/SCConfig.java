@@ -143,9 +143,9 @@ public final class SCConfig {
     private SCConfig() {}
 
     public static void register(ModContainer container) {
-        // 用 COMMON 而不是 SERVER：配置文件落在 config/ 目录（smartclean-common.toml），玩家可直接编辑，
-        // 不再需要进存档的 serverconfig 目录才能改。
-        container.registerConfig(ModConfig.Type.COMMON, SERVER_SPEC);
+        // 26.3 的 FML 12 把 COMMON/SERVER 换成了 LOCAL/SYNCED：
+        // 这里仍要"各端各自一份配置文件"的语义（客户端能自己决定 showSlotTimers），所以用 LOCAL。
+        container.registerConfig(ModConfig.Type.LOCAL, SERVER_SPEC);
     }
 
     public static void onLoad(ModConfigEvent.Loading event) {
