@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "smartclean",
+  "version": "${version}",
+  "name": "SmartClean",
+  "description": "Smart item cleaner: paged trash GUI with side page buttons, per-item sweep and retention countdowns, and trash compression rules.",
+  "authors": [
+    "QLN"
+  ],
+  "license": "CC-BY-4.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.qln.smartclean.SmartClean"
+    ],
+    "client": [
+      "dev.qln.smartclean.client.SCClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16",
+    "fabric-api": "*",
+    "minecraft": "1.21.1"
+  }
+}

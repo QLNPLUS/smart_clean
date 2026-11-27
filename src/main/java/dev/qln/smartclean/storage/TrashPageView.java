@@ -104,7 +104,7 @@ public class TrashPageView implements Container {
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return SCConfig.PLAYER_INSERT.get();
+        return SCConfig.PLAYER_INSERT;
     }
 
     @Override

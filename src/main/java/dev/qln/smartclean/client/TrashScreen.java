@@ -1,6 +1,6 @@
 package dev.qln.smartclean.client;
 
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
@@ -61,7 +61,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
     /** 槽位倒计时：基础层与物品先落屏，再在显式 Z 层画字并立即 flush，保证文字在图标之上。 */
     private void renderSlotTimersOnTop(GuiGraphics graphics) {
-        if (!SCConfig.SHOW_SLOT_TIMERS.get()) return;
+        if (!SCConfig.SHOW_SLOT_TIMERS) return;
         graphics.flush();
         Minecraft.getInstance().renderBuffers().bufferSource().endBatch();
         graphics.pose().pushPose();
@@ -160,7 +160,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     private void requestPage(int delta) {
-        PacketDistributor.sendToServer(new SCNetwork.PageRequest(delta));
+        ClientPlayNetworking.send(new SCNetwork.PageRequest(delta));
     }
 
     private static boolean isInside(double mouseX, double mouseY, int x, int y, int w, int h) {

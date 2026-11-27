@@ -28,7 +28,7 @@ public class TrashMenu extends AbstractContainerMenu {
     private int[] remaining = new int[TRASH_SLOTS];
 
     public TrashMenu(int windowId, Inventory playerInventory) {
-        super(SCMenus.TRASH.get(), windowId);
+        super(SCMenus.TRASH, windowId);
         this.playerInventory = playerInventory;
         boolean clientView = playerInventory.player.level().isClientSide();
         this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0, !clientView);

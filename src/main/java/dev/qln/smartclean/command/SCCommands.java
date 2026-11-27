@@ -1,22 +1,21 @@
 package dev.qln.smartclean.command;
 
 import dev.qln.smartclean.SmartClean;
+import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.net.SCNetwork;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.bus.api.SubscribeEvent;
 
 public final class SCCommands {
 
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event) {
-        event.getDispatcher().register(
+    public static void register() {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
                 Commands.literal("smartclean")
                         .then(Commands.literal("help").executes(ctx -> help(ctx.getSource())))
                         .then(Commands.literal("collect")
@@ -30,7 +29,7 @@ public final class SCCommands {
                         .then(Commands.literal("reload")
                                 .requires(src -> src.hasPermission(2))
                                 .executes(ctx -> reload(ctx.getSource())))
-        );
+        ));
     }
 
     private static int help(CommandSourceStack src) {
@@ -57,8 +56,7 @@ public final class SCCommands {
                 (windowId, playerInventory, p) -> new TrashMenu(windowId, playerInventory),
                 Component.literal("回收站")
         );
-        player.openMenu(provider, buf -> {
-        });
+        player.openMenu(provider);
         if (player.containerMenu instanceof TrashMenu menu) {
             SCNetwork.sendSync(player, menu);
         }
@@ -77,6 +75,7 @@ public final class SCCommands {
     }
 
     private static int reload(CommandSourceStack src) {
+        SCConfig.load();
         SmartClean.SERVICE.applyConfig();
         src.sendSuccess(() -> Component.literal("已从配置文件应用参数。"), true);
         return 1;

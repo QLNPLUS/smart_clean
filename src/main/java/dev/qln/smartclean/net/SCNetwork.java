@@ -3,6 +3,8 @@ package dev.qln.smartclean.net;
 import dev.qln.smartclean.SmartClean;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.storage.TrashStore;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,41 +12,40 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 /**
- * 分页回收站的网络层（NeoForge 1.21.1 payload 体系）。
+ * 分页回收站的网络层（Fabric 1.21.1 payload 体系）。
  */
 public final class SCNetwork {
 
     private SCNetwork() {}
 
-    public static void register(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1");
-        registrar.playToServer(PageRequest.TYPE, PageRequest.STREAM_CODEC, PageRequest::handle);
-        registrar.playToClient(TrashSync.TYPE, TrashSync.STREAM_CODEC, TrashSync::handle);
+    public static void registerCommon() {
+        PayloadTypeRegistry.playC2S().register(PageRequest.TYPE, PageRequest.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(TrashSync.TYPE, TrashSync.STREAM_CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(PageRequest.TYPE, (payload, context) ->
+                context.server().execute(() -> {
+                    ServerPlayer player = context.player();
+                    if (player.containerMenu instanceof TrashMenu menu) {
+                        menu.turnPage(payload.delta());
+                        menu.broadcastChanges();
+                        sendSync(player, menu);
+                    }
+                }));
     }
 
     public static void sendSync(ServerPlayer player, TrashMenu menu) {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        MinecraftServer server = player.getServer();
         if (server == null) return;
         long now = SmartClean.SERVICE.gameTime(server);
         TrashStore store = SmartClean.SERVICE.getStore();
         int[] remaining = store.remainingSeconds(menu.getPage(), now);
-        PacketDistributor.sendToPlayer(player,
+        ServerPlayNetworking.send(player,
                 new TrashSync(menu.getPage(), store.pageCount(), store.totalItems(), remaining));
     }
 
-    @SubscribeEvent
-    public static void onServerTick(ServerTickEvent.Post event) {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        if (server == null) return;
+    public static void onServerTick(MinecraftServer server) {
         if (server.getTickCount() % 20 != 0) return;
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             if (player.containerMenu instanceof TrashMenu menu) {
@@ -64,17 +65,6 @@ public final class SCNetwork {
         @Override
         public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
             return TYPE;
-        }
-
-        public static void handle(PageRequest payload, IPayloadContext context) {
-            context.enqueueWork(() -> {
-                if (context.player() instanceof ServerPlayer player
-                        && player.containerMenu instanceof TrashMenu menu) {
-                    menu.turnPage(payload.delta());
-                    menu.broadcastChanges();
-                    sendSync(player, menu);
-                }
-            });
         }
     }
 
@@ -111,10 +101,6 @@ public final class SCNetwork {
                 remaining[i] = value <= 0 ? -1 : value - 1;
             }
             return new TrashSync(page, pageCount, totalItems, remaining);
-        }
-
-        public static void handle(TrashSync payload, IPayloadContext context) {
-            context.enqueueWork(() -> dev.qln.smartclean.client.ClientSyncHandler.apply(payload));
         }
     }
 }

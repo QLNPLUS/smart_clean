@@ -15,7 +15,7 @@ public class TrashSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return SCConfig.PLAYER_INSERT.get();
+        return SCConfig.PLAYER_INSERT;
     }
 
     @Override

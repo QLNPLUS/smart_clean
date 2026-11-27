@@ -1,20 +1,22 @@
 package dev.qln.smartclean.menu;
 
 import dev.qln.smartclean.SmartClean;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class SCMenus {
 
-    public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(Registries.MENU, SmartClean.MODID);
+    public static final MenuType<TrashMenu> TRASH = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(SmartClean.MODID, "trash"),
+            new MenuType<>(TrashMenu::new, FeatureFlags.VANILLA_SET));
 
-    public static final DeferredHolder<MenuType<?>, MenuType<TrashMenu>> TRASH =
-            MENUS.register("trash", () -> IMenuTypeExtension.create(
-                    (windowId, playerInventory, data) -> new TrashMenu(windowId, playerInventory)));
+    public static void register() {
+        // 静态字段初始化时已完成注册，这里保留统一入口，方便以后加更多菜单。
+    }
 
     private SCMenus() {}
 }

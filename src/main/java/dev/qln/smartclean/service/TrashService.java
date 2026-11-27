@@ -9,15 +9,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -27,6 +24,9 @@ import java.util.function.Predicate;
  * 物品压缩、黑名单、虚空保护与全部消息广播。
  */
 public class TrashService {
+
+    /** Fabric 版没有 ServerLifecycleHooks，由 SCEvents 在服务器启停时维护。 */
+    private MinecraftServer currentServer;
 
     private int intervalTicks = 20 * 60 * 5;
     private int keepTicks = 20 * 60 * 2;
@@ -71,46 +71,50 @@ public class TrashService {
         return store;
     }
 
-    public synchronized void applyConfig() {
-        this.intervalTicks = SCConfig.TICKS_PER_COLLECT.get();
-        this.keepTicks = SCConfig.TICKS_KEEP_AFTER_COLLECT.get();
-        this.autoCollect = SCConfig.ENABLE_AUTO_COLLECT.get();
-        this.announce = SCConfig.ANNOUNCE_MESSAGES.get();
-        this.maxPages = SCConfig.MAX_PAGES.get();
-        this.prefixRaw = SCConfig.PREFIX.get();
+    public void setCurrentServer(MinecraftServer server) {
+        this.currentServer = server;
+    }
 
-        List<? extends Integer> ws = SCConfig.WARN_SECONDS.get();
+    public synchronized void applyConfig() {
+        this.intervalTicks = SCConfig.TICKS_PER_COLLECT;
+        this.keepTicks = SCConfig.TICKS_KEEP_AFTER_COLLECT;
+        this.autoCollect = SCConfig.ENABLE_AUTO_COLLECT;
+        this.announce = SCConfig.ANNOUNCE_MESSAGES;
+        this.maxPages = SCConfig.MAX_PAGES;
+        this.prefixRaw = SCConfig.PREFIX;
+
+        List<? extends Integer> ws = SCConfig.WARN_SECONDS;
         this.warnSeconds = new ArrayList<>();
         for (Object o : ws) if (o instanceof Integer i && i >= 0) this.warnSeconds.add(i);
         this.warnSeconds.sort(Comparator.reverseOrder());
 
-        this.msgPreCollect = SCConfig.MSG_PRE_COLLECT.get();
-        this.msgCollected = SCConfig.MSG_COLLECTED.get();
-        this.msgItemSwept = SCConfig.MSG_ITEM_SWEPT.get();
-        this.msgPurged = SCConfig.MSG_PURGED.get();
-        this.msgStatus = SCConfig.MSG_STATUS.get();
-        this.msgHelp = SCConfig.MSG_HELP.get().replace("\\n", "\n");
-        this.msgCmdCollect = SCConfig.MSG_CMD_COLLECT.get();
-        this.msgCmdCollectNone = SCConfig.MSG_CMD_COLLECT_NONE.get();
-        this.msgCmdPurge = SCConfig.MSG_CMD_PURGE.get();
+        this.msgPreCollect = SCConfig.MSG_PRE_COLLECT;
+        this.msgCollected = SCConfig.MSG_COLLECTED;
+        this.msgItemSwept = SCConfig.MSG_ITEM_SWEPT;
+        this.msgPurged = SCConfig.MSG_PURGED;
+        this.msgStatus = SCConfig.MSG_STATUS;
+        this.msgHelp = SCConfig.MSG_HELP.replace("\\n", "\n");
+        this.msgCmdCollect = SCConfig.MSG_CMD_COLLECT;
+        this.msgCmdCollectNone = SCConfig.MSG_CMD_COLLECT_NONE;
+        this.msgCmdPurge = SCConfig.MSG_CMD_PURGE;
 
-        this.voidProtect = SCConfig.ENABLE_VOID_PROTECT.get();
-        this.voidRaiseMax = SCConfig.VOID_RAISE_MAX_STEPS.get();
-        this.voidResetVel = SCConfig.VOID_RESET_VELOCITY.get();
+        this.voidProtect = SCConfig.ENABLE_VOID_PROTECT;
+        this.voidRaiseMax = SCConfig.VOID_RAISE_MAX_STEPS;
+        this.voidResetVel = SCConfig.VOID_RESET_VELOCITY;
 
         this.blacklist.clear();
-        for (String s : SCConfig.ITEM_BLACKLIST.get()) {
+        for (String s : SCConfig.ITEM_BLACKLIST) {
             ResourceLocation id = CompressRule.parseId(s);
             if (id != null) this.blacklist.add(id);
         }
 
         this.sweepLifetimes.clear();
-        parseIdSeconds(SCConfig.SWEEP_LIFETIMES.get(), this.sweepLifetimes);
+        parseIdSeconds(SCConfig.SWEEP_LIFETIMES, this.sweepLifetimes);
         this.keepDurations.clear();
-        parseIdSeconds(SCConfig.KEEP_DURATIONS.get(), this.keepDurations);
+        parseIdSeconds(SCConfig.KEEP_DURATIONS, this.keepDurations);
 
         this.compressRules.clear();
-        for (String s : SCConfig.COMPRESS_RULES.get()) {
+        for (String s : SCConfig.COMPRESS_RULES) {
             CompressRule rule = CompressRule.parse(s);
             if (rule != null) this.compressRules.add(rule);
         }
@@ -147,9 +151,7 @@ public class TrashService {
     // 事件
     // ------------------------------------------------------------------
 
-    public void onServerTick(ServerTickEvent.Post event) {
-
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+    public void onServerTick(MinecraftServer server) {
         if (server == null) return;
         long now = gameTime(server);
         tickCounter++;
@@ -189,9 +191,9 @@ public class TrashService {
         }
     }
 
-    public void onEntityJoin(EntityJoinLevelEvent event) {
-        if (event.getLevel().isClientSide()) return;
-        if (!(event.getEntity() instanceof ItemEntity ie)) return;
+    public void onEntityJoin(Entity entity, ServerLevel level) {
+        if (level.isClientSide()) return;
+        if (!(entity instanceof ItemEntity ie)) return;
         Long expiry = Long.valueOf(0L);
         Integer seconds = sweepLifetimes.get(idOf(ie.getItem()));
         if (seconds != null && seconds > 0) {
@@ -200,17 +202,15 @@ public class TrashService {
         tracked.put(ie, expiry);
     }
 
-    public void onEntityLeave(EntityLeaveLevelEvent event) {
-        if (event.getLevel().isClientSide()) return;
-        if (event.getEntity() instanceof ItemEntity ie) {
+    public void onEntityLeave(Entity entity, ServerLevel level) {
+        if (level.isClientSide()) return;
+        if (entity instanceof ItemEntity ie) {
             tracked.remove(ie);
         }
     }
 
     private long gameTimeOf(ItemEntity ie) {
-        if (ie.level() instanceof ServerLevel level) return level.getGameTime();
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        return server == null ? 0L : gameTime(server);
+        return ie.level() instanceof ServerLevel level ? level.getGameTime() : 0L;
     }
 
     /** 世界侧独立倒计时：到点的掉落物立刻回收，优先级高于全局 collect 间隔。 */
@@ -289,7 +289,7 @@ public class TrashService {
     // ------------------------------------------------------------------
 
     public int collectNow() {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        MinecraftServer server = currentServer;
         if (server == null) return 0;
         return collectNow(server, gameTime(server));
     }
@@ -382,7 +382,7 @@ public class TrashService {
     // ------------------------------------------------------------------
 
     public Component statusMessage() {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        MinecraftServer server = currentServer;
         long now = server == null ? 0L : gameTime(server);
         int slotsTotal = store.pageCount() * TrashStore.SLOTS_PER_PAGE;
         int slotsUsed = store.usedSlots();
