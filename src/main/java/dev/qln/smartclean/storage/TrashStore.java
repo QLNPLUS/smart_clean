@@ -144,7 +144,7 @@ public class TrashStore {
             ItemStack[] arr = stacks.get(p);
             for (int i = 0; i < SLOTS_PER_PAGE && !remainder.isEmpty(); i++) {
                 ItemStack current = arr[i];
-                if (current.isEmpty() || !ItemStack.isSameItemSameComponents(current, remainder)) continue;
+                if (current.isEmpty() || !ItemStack.isSameItemSameTags(current, remainder)) continue;
                 int canMove = Math.min(current.getMaxStackSize() - current.getCount(), remainder.getCount());
                 if (canMove > 0) {
                     current.grow(canMove);

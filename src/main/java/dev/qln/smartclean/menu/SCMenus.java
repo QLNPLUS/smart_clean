@@ -11,7 +11,7 @@ public final class SCMenus {
 
     public static final MenuType<TrashMenu> TRASH = Registry.register(
             BuiltInRegistries.MENU,
-            ResourceLocation.fromNamespaceAndPath(SmartClean.MODID, "trash"),
+            new ResourceLocation(SmartClean.MODID, "trash"),
             new MenuType<>(TrashMenu::new, FeatureFlags.VANILLA_SET));
 
     public static void register() {

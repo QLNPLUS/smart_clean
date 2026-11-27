@@ -1,6 +1,8 @@
 package dev.qln.smartclean.client;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.network.FriendlyByteBuf;
 
 import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
@@ -22,9 +24,9 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
 
-    private static final ResourceLocation BUTTONS = ResourceLocation.fromNamespaceAndPath("smartclean", "textures/gui/page_buttons.png");
+    private static final ResourceLocation BUTTONS = new ResourceLocation("smartclean", "textures/gui/page_buttons.png");
     private static final int BTN_W = 14;
     private static final int BTN_H = 32;
     /** 翻页按钮贴图实际尺寸：2 列（左/右）× 2 行（普通/悬停）+ 1 行（禁用）。 */
@@ -160,7 +162,9 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     private void requestPage(int delta) {
-        ClientPlayNetworking.send(new SCNetwork.PageRequest(delta));
+        FriendlyByteBuf buf = PacketByteBufs.create();
+        buf.writeVarInt(delta);
+        ClientPlayNetworking.send(SCNetwork.PAGE_REQUEST, buf);
     }
 
     private static boolean isInside(double mouseX, double mouseY, int x, int y, int w, int h) {
