@@ -21,8 +21,8 @@ neoForge {
         client {
             client()
             // 自测用：直接连本地服务端进世界，便于 AgentHelper 驱动界面
-            programArgument '--quickPlayMultiplayer'
-            programArgument '127.0.0.1:25565'
+            programArgument '--quickPlaySingleplayer'
+            programArgument 'New World 263'
         }
         server {
             server()
