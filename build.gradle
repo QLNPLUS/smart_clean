@@ -32,7 +32,10 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            // 自测用：直接连本地服务端进世界，便于 AgentHelper 驱动界面。平时开发可注释掉。
+            args '--server', '127.0.0.1', '--port', '25565'
         }
+
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
