@@ -35,16 +35,16 @@ public final class SCCommands {
     }
 
     private static int help(CommandSourceStack src) {
-        src.sendSuccess(() -> SmartClean.SERVICE.helpMessage(), false);
+        src.sendSuccess(SmartClean.SERVICE.helpMessage(), false);
         return 1;
     }
 
     private static int collect(CommandSourceStack src) {
         int moved = SmartClean.SERVICE.collectNow();
         if (moved > 0) {
-            src.sendSuccess(() -> SmartClean.SERVICE.cmdCollectFeedback(moved), true);
+            src.sendSuccess(SmartClean.SERVICE.cmdCollectFeedback(moved), true);
         } else {
-            src.sendSuccess(() -> SmartClean.SERVICE.cmdCollectNoneFeedback(), true);
+            src.sendSuccess(SmartClean.SERVICE.cmdCollectNoneFeedback(), true);
         }
         return 1;
     }
@@ -68,18 +68,18 @@ public final class SCCommands {
 
     private static int purge(CommandSourceStack src) {
         int cleared = SmartClean.SERVICE.purgeNow();
-        src.sendSuccess(() -> SmartClean.SERVICE.cmdPurgeFeedback(cleared), true);
+        src.sendSuccess(SmartClean.SERVICE.cmdPurgeFeedback(cleared), true);
         return 1;
     }
 
     private static int status(CommandSourceStack src) {
-        src.sendSuccess(() -> SmartClean.SERVICE.statusMessage(), false);
+        src.sendSuccess(SmartClean.SERVICE.statusMessage(), false);
         return 1;
     }
 
     private static int reload(CommandSourceStack src) {
         SmartClean.SERVICE.applyConfig();
-        src.sendSuccess(() -> Component.literal("已从配置文件应用参数。"), true);
+        src.sendSuccess(Component.literal("已从配置文件应用参数。"), true);
         return 1;
     }
 

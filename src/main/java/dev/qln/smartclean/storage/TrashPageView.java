@@ -68,7 +68,9 @@ public class TrashPageView implements Container {
         if (!canMutateStore) {
             ItemStack cur = store.getItem(page, slot);
             if (cur.isEmpty() || amount <= 0) return ItemStack.EMPTY;
-            return cur.copyWithCount(Math.min(amount, cur.getCount()));
+            ItemStack taken = cur.copy();
+            taken.setCount(Math.min(amount, cur.getCount()));
+            return taken;
         }
         return store.removeItem(page, slot, amount);
     }

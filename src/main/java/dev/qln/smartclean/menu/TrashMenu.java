@@ -30,7 +30,7 @@ public class TrashMenu extends AbstractContainerMenu {
     public TrashMenu(int windowId, Inventory playerInventory) {
         super(SCMenus.TRASH.get(), windowId);
         this.playerInventory = playerInventory;
-        boolean clientView = playerInventory.player.level().isClientSide;
+        boolean clientView = playerInventory.player.level.isClientSide;
         this.view = new TrashPageView(SmartClean.SERVICE.getStore(), 0, !clientView);
 
         for (int row = 0; row < 6; row++) {
@@ -105,7 +105,7 @@ public class TrashMenu extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player player, int index) {
         // Shift 点击只由服务端处理：客户端预测会在共享的回收站存储上先做一遍移动，
         // 服务端随后就取不到物品，表现为"Shift 点击后物品直接消失"。
-        if (player.level().isClientSide) {
+        if (player.level.isClientSide) {
             return ItemStack.EMPTY;
         }
         Slot slot = index >= 0 && index < this.slots.size() ? this.slots.get(index) : null;
@@ -118,7 +118,7 @@ public class TrashMenu extends AbstractContainerMenu {
             return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {
-            slot.setByPlayer(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         } else {
             slot.setChanged();
         }
@@ -131,7 +131,7 @@ public class TrashMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         ItemStack carried = this.getCarried();
-        if (!carried.isEmpty() && !player.level().isClientSide && player.getInventory().add(carried)) {
+        if (!carried.isEmpty() && !player.level.isClientSide && player.getInventory().add(carried)) {
             this.setCarried(ItemStack.EMPTY);
         }
         super.removed(player);

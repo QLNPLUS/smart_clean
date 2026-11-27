@@ -1,11 +1,14 @@
 package dev.qln.smartclean.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.qln.smartclean.config.SCConfig;
 import dev.qln.smartclean.menu.TrashMenu;
 import dev.qln.smartclean.net.SCNetwork;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +32,7 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     private static final int BTN_TEX_W = 28;
     private static final int BTN_TEX_H = 96;
 
-    /** 字体层：物品图标走独立的 item buffer，冲刷晚于批处理文字，必须显式分层 + 分块 flush 才压得住。 */
+    /** 字体层：物品与文字走不同批次，抬到显式 Z 层再画，保证文字压得住图标。 */
     private static final float TIMER_LAYER_Z = 300.0f;
 
 
@@ -51,20 +54,19 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(graphics);
-        super.render(graphics, mouseX, mouseY, partialTick);
-        this.renderTooltip(graphics, mouseX, mouseY);
-        renderSlotTimersOnTop(graphics);
+    public void render(PoseStack pose, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(pose);
+        super.render(pose, mouseX, mouseY, partialTick);
+        this.renderTooltip(pose, mouseX, mouseY);
+        renderSlotTimersOnTop(pose);
     }
 
-    /** 槽位倒计时：基础层与物品先落屏，再在显式 Z 层画字并立即 flush，保证文字在图标之上。 */
-    private void renderSlotTimersOnTop(GuiGraphics graphics) {
+    /** 槽位倒计时：物品先落屏，再在显式 Z 层画字，保证文字在图标之上。 */
+    private void renderSlotTimersOnTop(PoseStack pose) {
         if (!SCConfig.SHOW_SLOT_TIMERS.get()) return;
-        graphics.flush();
         Minecraft.getInstance().renderBuffers().bufferSource().endBatch();
-        graphics.pose().pushPose();
-        graphics.pose().translate(0.0F, 0.0F, TIMER_LAYER_Z);
+        pose.pushPose();
+        pose.translate(0.0F, 0.0F, TIMER_LAYER_Z);
         for (int slot = 0; slot < TrashMenu.TRASH_SLOTS; slot++) {
             int seconds = this.menu.getRemainingSeconds(slot);
             if (seconds < 0) continue;
@@ -72,10 +74,9 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
             int row = slot / 9;
             int x = this.leftPos + SIDEBAR + 8 + col * 18 + 1;
             int y = this.topPos + 18 + row * 18 + 1;
-            graphics.drawString(this.font, formatSeconds(seconds), x, y, 0xFFFFFFFF, true);
+            this.font.drawShadow(pose, formatSeconds(seconds), (float) x, (float) y, 0xFFFFFFFF);
         }
-        graphics.flush();
-        graphics.pose().popPose();
+        pose.popPose();
     }
 
     private static String formatSeconds(int seconds) {
@@ -98,13 +99,13 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack pose, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
 
 
-        graphics.blit(TEXTURE, x + SIDEBAR, y, 0, 0, VANILLA_W, 125);
-        graphics.blit(TEXTURE, x + SIDEBAR, y + 125, 0, 126, VANILLA_W, VANILLA_H - 125);
+        blit(pose, TEXTURE, x + SIDEBAR, y, 0, 0, VANILLA_W, 125, 256, 256);
+        blit(pose, TEXTURE, x + SIDEBAR, y + 125, 0, 126, VANILLA_W, VANILLA_H - 125, 256, 256);
 
         int buttonY = buttonTop();
         boolean canPrev = this.menu.getPage() > 0;
@@ -115,29 +116,37 @@ public class TrashScreen extends AbstractContainerScreen<TrashMenu> {
         this.hoverLeft = canPrev && this.isInside(mouseX, mouseY, leftX, buttonY, BTN_W, BTN_H);
         this.hoverRight = canNext && this.isInside(mouseX, mouseY, rightX, buttonY, BTN_W, BTN_H);
 
-        drawPageButton(graphics, leftX, buttonY, canPrev, this.hoverLeft, true);
-        drawPageButton(graphics, rightX, buttonY, canNext, this.hoverRight, false);
+        drawPageButton(pose, leftX, buttonY, canPrev, this.hoverLeft, true);
+        drawPageButton(pose, rightX, buttonY, canNext, this.hoverRight, false);
     }
 
-    private void drawPageButton(GuiGraphics graphics, int x, int y, boolean enabled, boolean hovered, boolean left) {
+    private void drawPageButton(PoseStack pose, int x, int y, boolean enabled, boolean hovered, boolean left) {
         int u = left ? 0 : BTN_W;
         int v = !enabled ? BTN_H * 2 : (hovered ? BTN_H : 0);
-        graphics.blit(BUTTONS, x, y, u, v, BTN_W, BTN_H, BTN_TEX_W, BTN_TEX_H);
+        blit(pose, BUTTONS, x, y, u, v, BTN_W, BTN_H, BTN_TEX_W, BTN_TEX_H);
+    }
+
+    /** 1.19.2 仍用 PoseStack + 显式绑定纹理的方式贴图。 */
+    private static void blit(PoseStack pose, ResourceLocation texture, int x, int y, int u, int v,
+                             int width, int height, int texWidth, int texHeight) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, texture);
+        GuiComponent.blit(pose, x, y, 0, (float) u, (float) v, width, height, texWidth, texHeight);
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
-        graphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0x404040, false);
+    protected void renderLabels(PoseStack pose, int mouseX, int mouseY) {
+        this.font.draw(pose, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 0x404040);
+        this.font.draw(pose, this.playerInventoryTitle, (float) this.inventoryLabelX, (float) this.inventoryLabelY, 0x404040);
 
         int right = SIDEBAR + VANILLA_W - 8;
         String pageText = (this.menu.getPage() + 1) + " / " + this.menu.getPageCount();
         int width = this.font.width(pageText);
-        graphics.drawString(this.font, pageText, right - width, this.titleLabelY, 0x606060, false);
+        this.font.draw(pose, pageText, (float) (right - width), (float) this.titleLabelY, 0x606060);
 
         String items = "物品 " + this.menu.getTotalItems();
         int itemsWidth = this.font.width(items);
-        graphics.drawString(this.font, items, right - itemsWidth, this.inventoryLabelY, 0x606060, false);
+        this.font.draw(pose, items, (float) (right - itemsWidth), (float) this.inventoryLabelY, 0x606060);
 
     }
 

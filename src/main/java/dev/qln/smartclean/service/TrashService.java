@@ -208,7 +208,7 @@ public class TrashService {
     }
 
     private long gameTimeOf(ItemEntity ie) {
-        if (ie.level() instanceof ServerLevel level) return level.getGameTime();
+        if (ie.level instanceof ServerLevel level) return level.getGameTime();
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         return server == null ? 0L : gameTime(server);
     }
@@ -224,7 +224,7 @@ public class TrashService {
             processed++;
             ItemEntity ie = entry.getKey();
             long expiry = entry.getValue();
-            if (ie.isRemoved() || ie.level().isClientSide) {
+            if (ie.isRemoved() || ie.level.isClientSide) {
                 it.remove();
                 continue;
             }
@@ -237,7 +237,9 @@ public class TrashService {
                 ie.discard();
                 swept++;
             } else if (leftover != stack.getCount()) {
-                ie.setItem(stack.copyWithCount(leftover));
+                ItemStack remaining = stack.copy();
+                remaining.setCount(leftover);
+                ie.setItem(remaining);
                 swept++;
             }
         }
@@ -255,11 +257,11 @@ public class TrashService {
         while (it.hasNext() && processed < VOID_PROTECT_BUDGET_PER_TICK) {
             Map.Entry<ItemEntity, Long> entry = it.next();
             ItemEntity ie = entry.getKey();
-            if (ie.isRemoved() || ie.level().isClientSide) {
+            if (ie.isRemoved() || ie.level.isClientSide) {
                 it.remove();
                 continue;
             }
-            if (!(ie.level() instanceof ServerLevel level)) {
+            if (!(ie.level instanceof ServerLevel level)) {
                 it.remove();
                 continue;
             }
@@ -310,7 +312,9 @@ public class TrashService {
                     tracked.remove(entity);
                     moved++;
                 } else if (leftover != stack.getCount()) {
-                    entity.setItem(stack.copyWithCount(leftover));
+                    ItemStack remaining = stack.copy();
+                    remaining.setCount(leftover);
+                    entity.setItem(remaining);
                     moved++;
                 }
             }
