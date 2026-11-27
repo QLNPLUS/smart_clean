@@ -31,6 +31,11 @@ loom {
         client {
             client()
         }
+        // 自测用：直接进已有单人世界，便于 AgentHelper 驱动开界面/翻页
+        clientQuick {
+            client()
+            programArgs '--quickPlaySingleplayer', 'New World 1201'
+        }
         server {
             server()
         }

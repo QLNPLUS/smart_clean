@@ -26,6 +26,6 @@ public class SmartClean implements ModInitializer {
         SCEvents.register();
 
         SERVICE.applyConfig();
-        LOGGER.info("[SmartClean] initialized (Fabric 1.21.1).");
+        LOGGER.info("[SmartClean] initialized (Fabric 1.20.1).");
     }
 }
