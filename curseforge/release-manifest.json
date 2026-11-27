@@ -2,12 +2,12 @@
   "files": [
     {
       "minecraft": "1.20.1",
-      "artifact": "versions/1.20.1-forge/build/libs/smartclean-1.20.1-forge-1.0.4.jar",
-      "sha256": "978339f600ad42d4ae2269c3da193a826f9955b87d65d4f0a5f30bd7ff26599b",
+      "artifact": "versions/1.20.1-forge/build/libs/smartclean-1.20.1-forge-1.0.5.jar",
+      "sha256": "e3228a7181754124b6be172133dd071361b189d4147221c9cd8ff72de2a3e626",
       "metadata": {
-        "changelog": "SmartClean 1.0.4 — fixes the layering of the optional per-slot countdown text.\n\n- The countdown now sits between the item icons and the tooltip: Forge/NeoForge 1.20.1-1.21.1 draw it after renderTooltip on an explicit z=300 layer (item icons are at 150, count decorations at 200, tooltips at 400); 26.1.2/26.2 keep the extractor nextStratum path.\n- Slots configured to never expire (retention 0 or negative) deliberately show no countdown.\n- Includes everything from 1.0.3: opt-in trash.showSlotTimers (default false), and the fix for the countdown being painted under item icons (item icons flush from a separate item buffer after the batched text).\n- Includes 1.0.2's Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.4：修复可选槽位倒计时文字的层级。\n\n- 倒计时现在位于物品图标与 tooltip 之间：1.20.1～1.21.1 在 renderTooltip 之后、z=300 的显式层绘制（物品 150、数量装饰 200、tooltip 400）；26.1.2/26.2 沿用提取器 nextStratum 路径。\n- 配置为永不过期（保留时间 0 或负数）的槽位按设计不显示倒计时。\n- 包含 1.0.3 的全部改动：可选的 trash.showSlotTimers（默认关闭），以及倒计时被物品图标盖住的修复（物品走独立 item buffer、晚于批处理文字落屏）。\n- 包含 1.0.2 的 Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
         "changelogType": "markdown",
-        "displayName": "smartclean-1.20.1-forge-1.0.4",
+        "displayName": "smartclean-1.20.1-forge-1.0.5",
         "releaseType": "release",
         "gameVersions": [
           "1.20.1",
@@ -19,13 +19,31 @@
       }
     },
     {
-      "minecraft": "1.21.1",
-      "artifact": "versions/1.21.1-neoforge/build/libs/smartclean-1.21.1-neoforge-1.0.4.jar",
-      "sha256": "ae3c91121aedfa6da935f1c6c14c3d141948bac13a30b2dcfa06f98e38e99fc2",
+      "minecraft": "1.19.2",
+      "artifact": "versions/1.19.2-forge/build/libs/smartclean-1.19.2-forge-1.0.5.jar",
+      "sha256": "e44fb7f706e6db2a765d114d6f10b12135e62cf5cac2b7a88f8e83775b52ab28",
       "metadata": {
-        "changelog": "SmartClean 1.0.4 — fixes the layering of the optional per-slot countdown text.\n\n- The countdown now sits between the item icons and the tooltip: Forge/NeoForge 1.20.1-1.21.1 draw it after renderTooltip on an explicit z=300 layer (item icons are at 150, count decorations at 200, tooltips at 400); 26.1.2/26.2 keep the extractor nextStratum path.\n- Slots configured to never expire (retention 0 or negative) deliberately show no countdown.\n- Includes everything from 1.0.3: opt-in trash.showSlotTimers (default false), and the fix for the countdown being painted under item icons (item icons flush from a separate item buffer after the batched text).\n- Includes 1.0.2's Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.4：修复可选槽位倒计时文字的层级。\n\n- 倒计时现在位于物品图标与 tooltip 之间：1.20.1～1.21.1 在 renderTooltip 之后、z=300 的显式层绘制（物品 150、数量装饰 200、tooltip 400）；26.1.2/26.2 沿用提取器 nextStratum 路径。\n- 配置为永不过期（保留时间 0 或负数）的槽位按设计不显示倒计时。\n- 包含 1.0.3 的全部改动：可选的 trash.showSlotTimers（默认关闭），以及倒计时被物品图标盖住的修复（物品走独立 item buffer、晚于批处理文字落屏）。\n- 包含 1.0.2 的 Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
         "changelogType": "markdown",
-        "displayName": "smartclean-1.21.1-neoforge-1.0.4",
+        "displayName": "smartclean-1.19.2-forge-1.0.5",
+        "releaseType": "release",
+        "gameVersions": [
+          "1.19.2",
+          "Forge",
+          "Java 17",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "1.21.1",
+      "artifact": "versions/1.21.1-neoforge/build/libs/smartclean-1.21.1-neoforge-1.0.5.jar",
+      "sha256": "53d47fc9d09551b44cdab4cc21a939e99de90f04bf187a0f519851b37fab587d",
+      "metadata": {
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
+        "changelogType": "markdown",
+        "displayName": "smartclean-1.21.1-neoforge-1.0.5",
         "releaseType": "release",
         "gameVersions": [
           "1.21.1",
@@ -37,13 +55,49 @@
       }
     },
     {
-      "minecraft": "26.1.2",
-      "artifact": "versions/26.1.2-neoforge/build/libs/smartclean-26.1.2-neoforge-1.0.4.jar",
-      "sha256": "32476ae65824a4e9c3c599900d85dc599adc3729133c2b26fba20a1b6e2e58b6",
+      "minecraft": "1.21.1",
+      "artifact": "versions/1.21.1-fabric/build/libs/smartclean-1.21.1-fabric-1.0.5.jar",
+      "sha256": "f4675134c32eef82cbc977f0d6f1b43021c8d71e3fc8fb8c0b59b69c9b435541",
       "metadata": {
-        "changelog": "SmartClean 1.0.4 — fixes the layering of the optional per-slot countdown text.\n\n- The countdown now sits between the item icons and the tooltip: Forge/NeoForge 1.20.1-1.21.1 draw it after renderTooltip on an explicit z=300 layer (item icons are at 150, count decorations at 200, tooltips at 400); 26.1.2/26.2 keep the extractor nextStratum path.\n- Slots configured to never expire (retention 0 or negative) deliberately show no countdown.\n- Includes everything from 1.0.3: opt-in trash.showSlotTimers (default false), and the fix for the countdown being painted under item icons (item icons flush from a separate item buffer after the batched text).\n- Includes 1.0.2's Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.4：修复可选槽位倒计时文字的层级。\n\n- 倒计时现在位于物品图标与 tooltip 之间：1.20.1～1.21.1 在 renderTooltip 之后、z=300 的显式层绘制（物品 150、数量装饰 200、tooltip 400）；26.1.2/26.2 沿用提取器 nextStratum 路径。\n- 配置为永不过期（保留时间 0 或负数）的槽位按设计不显示倒计时。\n- 包含 1.0.3 的全部改动：可选的 trash.showSlotTimers（默认关闭），以及倒计时被物品图标盖住的修复（物品走独立 item buffer、晚于批处理文字落屏）。\n- 包含 1.0.2 的 Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
         "changelogType": "markdown",
-        "displayName": "smartclean-26.1.2-neoforge-1.0.4",
+        "displayName": "smartclean-1.21.1-fabric-1.0.5",
+        "releaseType": "release",
+        "gameVersions": [
+          "1.21.1",
+          "Fabric",
+          "Java 21",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "1.20.1",
+      "artifact": "versions/1.20.1-fabric/build/libs/smartclean-1.20.1-fabric-1.0.5.jar",
+      "sha256": "52de7c6f14b8e22124e95e545bf84bd86e081c74cde436d8cfa5941e1c1349f1",
+      "metadata": {
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
+        "changelogType": "markdown",
+        "displayName": "smartclean-1.20.1-fabric-1.0.5",
+        "releaseType": "release",
+        "gameVersions": [
+          "1.20.1",
+          "Fabric",
+          "Java 17",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "26.1.2",
+      "artifact": "versions/26.1.2-neoforge/build/libs/smartclean-26.1.2-neoforge-1.0.5.jar",
+      "sha256": "afbb90e3dbe3e90322b3bcd30b4391d2a268fdd6fa9d9e747397f950d4d46fe7",
+      "metadata": {
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
+        "changelogType": "markdown",
+        "displayName": "smartclean-26.1.2-neoforge-1.0.5",
         "releaseType": "release",
         "gameVersions": [
           "26.1.2",
@@ -56,15 +110,33 @@
     },
     {
       "minecraft": "26.2",
-      "artifact": "versions/26.2-neoforge/build/libs/smartclean-26.2-neoforge-1.0.4.jar",
-      "sha256": "ec12ff63f08576a671b38a626e859440f38f8b2c7f086192a1198592d703bc0b",
+      "artifact": "versions/26.2-neoforge/build/libs/smartclean-26.2-neoforge-1.0.5.jar",
+      "sha256": "71d5d48851cc7fc55fe225d00c3d383bf1465f7f0277c600976ee90e80cb856c",
       "metadata": {
-        "changelog": "SmartClean 1.0.4 — fixes the layering of the optional per-slot countdown text.\n\n- The countdown now sits between the item icons and the tooltip: Forge/NeoForge 1.20.1-1.21.1 draw it after renderTooltip on an explicit z=300 layer (item icons are at 150, count decorations at 200, tooltips at 400); 26.1.2/26.2 keep the extractor nextStratum path.\n- Slots configured to never expire (retention 0 or negative) deliberately show no countdown.\n- Includes everything from 1.0.3: opt-in trash.showSlotTimers (default false), and the fix for the countdown being painted under item icons (item icons flush from a separate item buffer after the batched text).\n- Includes 1.0.2's Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.4：修复可选槽位倒计时文字的层级。\n\n- 倒计时现在位于物品图标与 tooltip 之间：1.20.1～1.21.1 在 renderTooltip 之后、z=300 的显式层绘制（物品 150、数量装饰 200、tooltip 400）；26.1.2/26.2 沿用提取器 nextStratum 路径。\n- 配置为永不过期（保留时间 0 或负数）的槽位按设计不显示倒计时。\n- 包含 1.0.3 的全部改动：可选的 trash.showSlotTimers（默认关闭），以及倒计时被物品图标盖住的修复（物品走独立 item buffer、晚于批处理文字落屏）。\n- 包含 1.0.2 的 Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
         "changelogType": "markdown",
-        "displayName": "smartclean-26.2-neoforge-1.0.4",
+        "displayName": "smartclean-26.2-neoforge-1.0.5",
         "releaseType": "release",
         "gameVersions": [
           "26.2",
+          "NeoForge",
+          "Java 25",
+          "Client",
+          "Server"
+        ]
+      }
+    },
+    {
+      "minecraft": "26.3",
+      "artifact": "versions/26.3-neoforge/build/libs/smartclean-26.3-neoforge-1.0.5.jar",
+      "sha256": "495eaca6e500a6bf337b73a8ea240942cede5978be00eaf322ad21d62ad76830",
+      "metadata": {
+        "changelog": "SmartClean 1.0.5 — adds four new platforms: NeoForge 26.3, Forge 1.19.2, Fabric 1.21.1 and Fabric 1.20.1.\n\n- New builds: NeoForge 26.3 (26.3.0.118), Forge 1.19.2 (43.4.0), Fabric 1.21.1 and Fabric 1.20.1 (Fabric Loader 0.16+ plus Fabric API required).\n- NeoForge 26.3 registers its config as ModConfig.Type.LOCAL: FML 12 renamed COMMON/SERVER to LOCAL/SYNCED. The file is still config/smartclean-common.toml.\n- Forge 1.19.2 keeps the same feature set but renders through PoseStack, since 1.19.2 has no GuiGraphics.\n- The Fabric builds have no ForgeConfigSpec, so the config is read by a small built-in TOML reader at the same path with the same keys and defaults.\n- All eight builds share mod_version 1.0.5; the existing 1.20.1/1.21.1/26.1.2/26.2 builds keep the same behaviour.\n\n---\nSmartClean 1.0.5：新增四套平台 NeoForge 26.3、Forge 1.19.2、Fabric 1.21.1 与 Fabric 1.20.1。\n\n- 新构建：NeoForge 26.3（26.3.0.118）、Forge 1.19.2（43.4.0）、Fabric 1.21.1 与 Fabric 1.20.1（需 Fabric Loader 0.16+ 与 Fabric API）。\n- NeoForge 26.3 的配置改为 ModConfig.Type.LOCAL 注册（FML 12 把 COMMON/SERVER 更名为 LOCAL/SYNCED），文件名仍是 config/smartclean-common.toml。\n- Forge 1.19.2 功能集不变，界面改用 PoseStack 绘制（1.19.2 没有 GuiGraphics）。\n- Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，路径、键名与默认值与其他加载器一致。\n- 八套构建统一为 mod_version 1.0.5，已有的 1.20.1/1.21.1/26.1.2/26.2 构建行为不变。",
+        "changelogType": "markdown",
+        "displayName": "smartclean-26.3-neoforge-1.0.5",
+        "releaseType": "release",
+        "gameVersions": [
+          "26.3",
           "NeoForge",
           "Java 25",
           "Client",

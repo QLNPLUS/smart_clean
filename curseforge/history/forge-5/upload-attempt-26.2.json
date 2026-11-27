@@ -1,0 +1,17 @@
+{
+  "startedUtc": "2026-11-26T14:47:30.496227+00:00",
+  "sha256": "ec12ff63f08576a671b38a626e859440f38f8b2c7f086192a1198592d703bc0b",
+  "metadata": {
+    "changelog": "SmartClean 1.0.4 — fixes the layering of the optional per-slot countdown text.\n\n- The countdown now sits between the item icons and the tooltip: Forge/NeoForge 1.20.1-1.21.1 draw it after renderTooltip on an explicit z=300 layer (item icons are at 150, count decorations at 200, tooltips at 400); 26.1.2/26.2 keep the extractor nextStratum path.\n- Slots configured to never expire (retention 0 or negative) deliberately show no countdown.\n- Includes everything from 1.0.3: opt-in trash.showSlotTimers (default false), and the fix for the countdown being painted under item icons (item icons flush from a separate item buffer after the batched text).\n- Includes 1.0.2's Shift-click fix, real paging, side page arrows JEI cannot cover, config in config/smartclean-common.toml with trash.playerInsert, and the NeoForge 26.2 build.\n\n---\nSmartClean 1.0.4：修复可选槽位倒计时文字的层级。\n\n- 倒计时现在位于物品图标与 tooltip 之间：1.20.1～1.21.1 在 renderTooltip 之后、z=300 的显式层绘制（物品 150、数量装饰 200、tooltip 400）；26.1.2/26.2 沿用提取器 nextStratum 路径。\n- 配置为永不过期（保留时间 0 或负数）的槽位按设计不显示倒计时。\n- 包含 1.0.3 的全部改动：可选的 trash.showSlotTimers（默认关闭），以及倒计时被物品图标盖住的修复（物品走独立 item buffer、晚于批处理文字落屏）。\n- 包含 1.0.2 的 Shift 点击修复、真正分页、JEI 不会覆盖的翻页箭头、config/smartclean-common.toml 中的配置与 trash.playerInsert、NeoForge 26.2 构建。\n",
+    "changelogType": "markdown",
+    "displayName": "smartclean-26.2-neoforge-1.0.4",
+    "releaseType": "release",
+    "gameVersions": [
+      16498,
+      10150,
+      14454,
+      9638,
+      9639
+    ]
+  }
+}
