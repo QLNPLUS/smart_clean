@@ -35,7 +35,8 @@ public class SmartClean {
         NeoForge.EVENT_BUS.addListener(SERVICE::onEntityLeave);
         NeoForge.EVENT_BUS.addListener(SCNetwork::onServerTick);
 
-        SERVICE.applyConfig();
+        // 配置改为 COMMON 后，构造阶段配置尚未加载（读取会抛 IllegalStateException），
+        // 改为完全依赖 SCConfig.onLoad / onReload 事件来应用配置。
         LOGGER.info("[SmartClean] initialized (NeoForge 1.21.1).");
     }
 }
