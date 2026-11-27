@@ -8,16 +8,22 @@
 
 ## 版本与分支
 
-同一份功能在四套独立工程中并行维护，每个版本一个 git worktree：
+同一份功能在八套独立工程中并行维护，每个版本一个 git worktree：
 
 | 目录 | Minecraft | 加载器 | Java | 分支 |
 | --- | --- | --- | --- | --- |
 | `versions/1.20.1-forge` | 1.20.1 | Forge 47.x | 17 | `mc/1.20.1-forge` |
+| `versions/1.19.2-forge` | 1.19.2 | Forge 43.x | 17 | `mc/1.19.2-forge` |
 | `versions/1.21.1-neoforge` | 1.21.1 | NeoForge 21.1.x | 21 | `mc/1.21.1-neoforge` |
+| `versions/1.21.1-fabric` | 1.21.1 | Fabric 0.16.x | 21 | `mc/1.21.1-fabric` |
+| `versions/1.20.1-fabric` | 1.20.1 | Fabric 0.16.x | 17 | `mc/1.20.1-fabric` |
 | `versions/26.1.2-neoforge` | 26.1.2 | NeoForge 26.1.2.x | 25 | `mc/26.1.2-neoforge` |
 | `versions/26.2-neoforge` | 26.2 | NeoForge 26.2.0.x | 25 | `mc/26.2-neoforge` |
+| `versions/26.3-neoforge` | 26.3 | NeoForge 26.3.0.x | 25 | `mc/26.3-neoforge` |
 
-四个版本的功能集保持一致；因为 Minecraft / 加载器 API 差异较大，代码按版本独立维护，不做跨版本共享模块。
+八个版本的功能集保持一致；因为 Minecraft / 加载器 API 差异较大，代码按版本独立维护，不做跨版本共享模块。
+
+Fabric 版没有 ForgeConfigSpec，配置由内置的极简 TOML 读写器处理，文件仍是 `config/smartclean-common.toml`，键名与默认值与其他加载器一致。
 
 ## 构建
 
@@ -26,18 +32,26 @@
 | 版本 | 构建命令 |
 | --- | --- |
 | `versions/1.20.1-forge` | `./gradlew build` |
+| `versions/1.19.2-forge` | `JAVA_HOME=<jdk17> ./gradlew build`（Gradle 7.6 + ForgeGradle 5） |
 | `versions/1.21.1-neoforge` | `./gradlew build --offline` |
+| `versions/1.21.1-fabric` | `./gradlew build` |
+| `versions/1.20.1-fabric` | `./gradlew build` |
 | `versions/26.1.2-neoforge` | `./gradlew build --offline` |
 | `versions/26.2-neoforge` | `./gradlew build --offline` |
+| `versions/26.3-neoforge` | `./gradlew build --offline` |
 
-四个版本均已在当前机器构建通过，产物位于各自 `build/libs/`：
+八个版本均已在当前机器构建通过，产物位于各自 `build/libs/`：
 
 - `smartclean-1.20.1-forge-1.0.4.jar`（Forge 1.20.1-47.3.0，JDK 17）
+- `smartclean-1.19.2-forge-1.0.5.jar`（Forge 1.19.2-43.4.0，JDK 17）
 - `smartclean-1.21.1-neoforge-1.0.4.jar`（NeoForge 21.1.209，JDK 21）
+- `smartclean-1.21.1-fabric-1.0.5.jar`（Fabric 0.16.14 + Fabric API 0.116.18+1.21.1，JDK 21）
+- `smartclean-1.20.1-fabric-1.0.5.jar`（Fabric 0.16.14 + Fabric API 0.92.12+1.20.1，JDK 17）
 - `smartclean-26.1.2-neoforge-1.0.4.jar`（NeoForge 26.1.2.114，JDK 25）
 - `smartclean-26.2-neoforge-1.0.4.jar`（NeoForge 26.2.0.95，JDK 25）
+- `smartclean-26.3-neoforge-1.0.5.jar`（NeoForge 26.3.0.118，JDK 25）
 
-注意：当前网络下 `maven.neoforged.net` 不可达，NeoForge 版本依赖本机 Gradle 缓存，需要带 `--offline`；Forge 1.20.1 从 `maven.minecraftforge.net` 拉取 MCP 数据（该域名可达，首次构建需联网）。JDK 由 Gradle toolchain 指定：17 / 21 走系统安装，25 走 `~/.gradle/jdks` 下的 Zulu 25。
+注意：当前网络下 `maven.neoforged.net` 不可达，NeoForge 版本依赖本机 Gradle 缓存，需要带 `--offline`；Forge 与 Fabric 从各自官方 maven 拉取（首次构建需联网，走代理）。JDK 由 Gradle toolchain 指定：17 / 21 走系统安装，25 走 `~/.gradle/jdks` 下的 Zulu 25。1.19.2 的 ForgeGradle 5 只支持 Gradle 7.x，因此该 worktree 自带 Gradle 7.6 wrapper，且必须用 JDK 17 启动 Gradle。
 
 ## 功能清单
 

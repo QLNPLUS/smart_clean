@@ -65,7 +65,7 @@ The page arrows and the countdown labels are rendered by the client, so **player
 
 ## Notes
 
-- Separate builds are published for each supported Minecraft / mod-loader combination — Forge 1.20.1, NeoForge 1.21.1, NeoForge 26.1.2 and NeoForge 26.2; pick the file matching your server.
+- Separate builds are published for each supported Minecraft / mod-loader combination — Forge 1.19.2, Forge 1.20.1, NeoForge 1.21.1, Fabric 1.20.1, Fabric 1.21.1, NeoForge 26.1.2, NeoForge 26.2 and NeoForge 26.3; pick the file matching your server and loader. Fabric builds need Fabric Loader 0.16+ and Fabric API.
 - The bin is shared and global: every player sees the same pages. Take items early, they expire on their own timers.
 - Compression rules only look at item IDs, not NBT/components. Use them deliberately — a rule that runs away (target amount ≥ source amount for the same item) is rejected at load time.
 - Only one cleaner mod should manage drops on a server; running several cleaners at the same time leads to double sweeping.
